@@ -1,21 +1,9 @@
 "use client";
 
-import React from "react";
-import * as SC from "./page.style";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <SC.mainDiv>
-      <SC.Table>
-        <thead>
-          <tr>
-            <td>fdfd</td>
-            <td>fdfd</td>
-            <td>fdfd</td>
-            <td>fdfd</td>
-          </tr>
-        </thead>
-      </SC.Table>
-    </SC.mainDiv>
-  );
+  const router = useRouter();
+  router.push("/database");
+  return <></>;
 }
