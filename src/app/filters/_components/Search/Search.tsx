@@ -6,7 +6,7 @@ import * as SC from "./Search.style";
 const Search = () => {
   return (
     <SC.SearchContainer>
-      <Image src={"./search.svg"} alt={"search"} width={24} height={24} />
+      <Image src={"/images/search.svg"} alt={"search"} width={24} height={24} />
       <SC.SearchInput placeholder="Наименование спецификации" />
     </SC.SearchContainer>
   );

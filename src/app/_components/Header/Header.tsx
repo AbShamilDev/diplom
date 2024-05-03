@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <SC.Header>
-      <Image src="./pslogo.svg" alt="logo" width={40} height={40} />
+      <Image src="/images/pslogo.svg" alt="logo" width={40} height={40} />
       <SC.ButtonsContainer>
         {buttons.map((button) => (
           <SC.NavButton

@@ -4,9 +4,7 @@ export const mainDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  // align-items: space-between;
   width: 80%;
-  height: calc(80vh - 40px + 3vh);
   gap: 20px;
   border-radius: 20px;
   padding: 30px;
@@ -25,15 +23,16 @@ export const tabDiv = styled.button<{ offset: number; active: boolean }>`
   font-size: 20px;
   font-weight: 600;
   border: none;
+  color: black;
   border-top: 1px solid rgba(0, 0, 0, 0.25);
   border-left: 1px solid rgba(0, 0, 0, 0.25);
   border-right: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 10px 10px 0 0;
   ${(props) => !props.active && "padding-bottom: 5px;"}
   top: calc(-45px + ${(props) => (props.active ? 0 : 5)}px);
-  left: calc(20px + ${(props) => props.offset * 140}px);
+  left: calc(20px + ${(props) => props.offset * 144}px);
   cursor: ${(props) => (props.active ? "default" : "pointer")};
   background-color: ${(props) => (props.active ? "white" : "transparent")};
   z-index: ${(props) => (props.active ? 10 : -10)};
-  transition: ease 0.1 s;
+  transition: ease 0.2s;
 `;

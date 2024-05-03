@@ -1,103 +1,67 @@
 import * as SC from "./Tabs.style";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import {} from "../TableEditors/TableEditors";
 import {
-  AddInstallationTemplate,
-  AddSpecificationTemplate,
-} from "../AddEntryTemplates/AddEntryTemplates";
-import Image from "next/image";
-import axiosApp from "../../../../../axios";
-import { useAppSelector } from "../../../../../redux/storeHooks";
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../redux/storeHooks";
+import { setTab } from "../../../../../redux/editDbSlice/editDbSlice";
+import ComponentsDataTable from "../DataTables/Tables/ComponentsDataTable";
+import InstallationsTableEditor from "../TableEditors/Editors/InstallationsTableEditor";
+import SpecificationsTableEditor from "../TableEditors/Editors/SpecificationsTableEditor";
+import ComponentsTableEditor from "../TableEditors/Editors/ComponentsTableEditor";
+import SpecificationsDataTable from "../DataTables/Tables/SpecificationsDataTable";
 
 export interface TabsProps {
-  tab: "Установки" | "Спецификации";
+  tab: "Установки" | "Спецификации" | "Компоненты";
 }
 
 const Tabs: FC<TabsProps> = ({ tab }) => {
-  const [editId, setEditId] = useState(-1);
-  const [editorFields, setEditorFields] = useState({
-    name: "",
-    specifications: [],
-  });
   const dataSlice = useAppSelector((state) => state.dataSlice);
-  // const items =
-  //   tab === "Установки" ? dataSlice.instalations : dataSlice.specifications;
-  const items = dataSlice.departaments;
-  const itemsHeaders = items.length ? Object.keys(items[0]) : [];
+  const [choosedTemplate, setChoosedTemplate] = useState<JSX.Element>();
+  const itemsObject = {
+    Установки: dataSlice.instalations,
+    Спецификации: dataSlice.specifications,
+    Компоненты: dataSlice.components,
+  };
+  const items = itemsObject[tab as keyof typeof itemsObject];
+  const dispatch = useAppDispatch();
 
-  const deleteItem = async (id: number) => {
+  useEffect(() => {
+    console.log(tab);
     switch (tab) {
       case "Установки":
-        // await axiosApp.delete('/instalations', {params});
+        console.log("УСТАНОВКИ");
+        setChoosedTemplate(<InstallationsTableEditor />);
         break;
-
+      case "Спецификации":
+        console.log("СПЕЦИФИКАЦИИ");
+        setChoosedTemplate(<SpecificationsTableEditor />);
+        break;
+      case "Компоненты":
+        setChoosedTemplate(<ComponentsTableEditor />);
+        break;
       default:
         break;
     }
-  };
+  }, [tab]);
 
   return (
     <SC.ItemsContainer>
-      <SC.Title>Количество записей: {items.length}</SC.Title>
-      <SC.ScrollTableContainer>
-        <div
-          style={{
-            display: editId !== -1 ? "block" : "none",
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            background: "#fffb",
-            zIndex: editId !== -1 ? 10 : 0,
-          }}
-        ></div>
-        <SC.ItemsTable>
-          <thead>
-            <tr>
-              {itemsHeaders.map((header, index) => (
-                <SC.TableHead key={index}>{header}</SC.TableHead>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr
-                key={`${item.id}_${item.name}`}
-                style={{ zIndex: item.id === editId ? 100 : 0 }}
-              >
-                {Object.values(item).map((el) => (
-                  <td key={el.toString()}>{el}</td>
-                ))}
-                <SC.FnTd>
-                  <SC.TdButton onClick={() => {}}>
-                    <Image
-                      src="/images/delete.svg"
-                      alt="edit"
-                      width={24}
-                      height={24}
-                    />
-                  </SC.TdButton>
-                </SC.FnTd>
-                <SC.FnTd>
-                  <SC.TdButton
-                    onClick={() => setEditId(editId !== -1 ? -1 : item.id)}
-                  >
-                    <Image
-                      src="/images/edit.svg"
-                      alt="edit"
-                      width={24}
-                      height={24}
-                    />
-                  </SC.TdButton>
-                </SC.FnTd>
-              </tr>
-            ))}
-          </tbody>
-        </SC.ItemsTable>
-      </SC.ScrollTableContainer>
-      {tab === "Установки" ? (
-        <AddInstallationTemplate />
+      <SC.TopContainer>
+        <SC.Title>Количество записей: {items.length}</SC.Title>
+        {tab === "Спецификации" && (
+          <SC.ToComponentsLink onClick={() => dispatch(setTab("Компоненты"))}>
+            Компоненты
+          </SC.ToComponentsLink>
+        )}
+      </SC.TopContainer>
+      {tab === "Компоненты" ? (
+        <ComponentsDataTable items={itemsObject.Компоненты} />
       ) : (
-        <AddSpecificationTemplate />
+        <SpecificationsDataTable items={itemsObject.Спецификации} />
       )}
+      {choosedTemplate}
     </SC.ItemsContainer>
   );
 };
