@@ -9,25 +9,9 @@ export const ItemsContainer = styled.div`
   transition: ease 0.2s;
 `;
 
-export const Title = styled.span`
-  font-size: 32px;
-`;
-
 export const MiddleText = styled.span`
   margin-bottom: 3px;
   font-size: 20px;
-`;
-
-export const ToComponentsLink = styled.span`
-  cursor: pointer;
-  color: #000a;
-  margin-right: 30px;
-`;
-
-export const TopContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 `;
 
 export const Button = styled.button<{ isCancel?: boolean }>`

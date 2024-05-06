@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html lang="ru">
       <body id="appElement" style={{ background: "#fff", color: "black" }}>
         <Header />
         <StoreProvider>

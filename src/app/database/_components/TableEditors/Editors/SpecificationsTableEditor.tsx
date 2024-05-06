@@ -1,17 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "../TableEditors.style";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../../redux/storeHooks";
-import { setIsFill } from "../../../../../../redux/editDbSlice/editDbSlice";
 import TableEditorTemplate from "../TableEditors";
 import ComponentsSelect from "../../ComponentsSelect/ComponentsSelect";
-import {
-  dataState,
-  getSpecifications,
-} from "../../../../../../redux/dataSlice/dataSlice";
-import axiosApp from "../../../../../../axios";
+import { dataState, getSpecifications } from "@/redux/dataSlice/dataSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
+import { axiosApp } from "@/axiosApp";
+import { setIsFill } from "@/redux/editDbSlice/editDbSlice";
 
 interface specificationFieldsInterface {
   name: string;
@@ -102,12 +96,20 @@ const SpecificationsTableEditor = () => {
         value={fields.name}
         required
       />
-      <SC.BlockText>Компоненты:</SC.BlockText>
-      <ComponentsSelect
-        departmentFilter={+fields.department_id}
-        setComponents={(el) => setFields({ ...fields, components: el })}
-        choosedComponents={fields.components}
-      />
+      {fields.department_id ? (
+        <>
+          <SC.BlockText>Компоненты:</SC.BlockText>
+          <ComponentsSelect
+            departmentFilter={+fields.department_id}
+            setComponents={(el) => setFields({ ...fields, components: el })}
+            choosedComponents={fields.components}
+          />
+        </>
+      ) : (
+        <SC.BlockText style={{ color: "gray", marginTop: "50px" }}>
+          Выберите отдел для добавления компонентов
+        </SC.BlockText>
+      )}
       <SC.SelectsContainer>
         <SC.SelectBlock>
           Отдел:
@@ -117,9 +119,11 @@ const SpecificationsTableEditor = () => {
             required
             value={fields.department_id}
           >
-            <option value="">Выберите департамент</option>
+            <option value="">Выберите отдел</option>
             {departments.map((dep) => (
-              <option value={dep.id}>{dep.name}</option>
+              <option key={`option_${dep.name}`} value={dep.id}>
+                {dep.name}
+              </option>
             ))}
           </SC.Select>
         </SC.SelectBlock>

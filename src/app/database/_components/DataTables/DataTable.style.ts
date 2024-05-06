@@ -48,3 +48,19 @@ export const TdButton = styled.button`
     background-color: #00000010;
   }
 `;
+
+export const Title = styled.span`
+  font-size: 32px;
+`;
+
+export const TopContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const ToComponentsLink = styled.span`
+  cursor: pointer;
+  color: #000a;
+  margin-right: 30px;
+`;

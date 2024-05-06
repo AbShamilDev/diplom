@@ -1,8 +1,9 @@
 import { FC, FormEvent, PropsWithChildren } from "react";
-import { useAppSelector } from "../../../../../redux/storeHooks";
+
 import * as SC from "./TableEditors.style";
 import { Button } from "../Tabs/Tabs.style";
 import Loading from "@/app/_components/Loading/Loading";
+import { useAppSelector } from "@/redux/storeHooks";
 
 interface Props {
   onSubmit: (ev: FormEvent<HTMLFormElement>) => void;

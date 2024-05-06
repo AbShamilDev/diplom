@@ -1,11 +1,8 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "../TableEditors.style";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../../redux/storeHooks";
-import { setIsFill } from "../../../../../../redux/editDbSlice/editDbSlice";
 import TableEditorTemplate from "../TableEditors";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
+import { setIsFill } from "@/redux/editDbSlice/editDbSlice";
 
 const InstallationsTableEditor = () => {
   const [fields, setFields] = useState({
@@ -71,19 +68,25 @@ const InstallationsTableEditor = () => {
 
   return (
     <TableEditorTemplate onSubmit={onSubmit}>
-      <SC.Input
-        placeholder="Название"
+      <SC.Select
         onChange={onChangeHandle}
         value={fields.name}
         name="name"
         required
-      />
+      >
+        <option value="">Выберите че-то там</option>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+      </SC.Select>
       <SC.BlockText>Спецификации:</SC.BlockText>
       <SC.SelectsContainer>
         {departments.map((dep, i) => {
           return (
-            <SC.SelectBlock>
-              Для "{dep.name}":
+            <SC.SelectBlock key={dep.name}>
+              Для &quot;{dep.name}&quot;:
               <SC.Select
                 key={`installSpec_for_${dep.name}`}
                 name={`spec-${i + 1}`}
@@ -95,7 +98,9 @@ const InstallationsTableEditor = () => {
                 {specifications
                   .filter((spec) => spec.department_id === dep.id)
                   .map((el) => (
-                    <option value={`${el.id}`}>{el.name}</option>
+                    <option key={`option2_${dep.name}`} value={`${el.id}`}>
+                      {el.name}
+                    </option>
                   ))}
               </SC.Select>
             </SC.SelectBlock>

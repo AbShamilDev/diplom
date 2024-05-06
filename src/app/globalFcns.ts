@@ -1,5 +1,4 @@
-import { dataState } from "../../redux/dataSlice/dataSlice";
-import { useAppSelector } from "../../redux/storeHooks";
+import { dataState } from "..";
 
 export const convertToCost = (num: number) =>
   num.toLocaleString("ru-RU", {

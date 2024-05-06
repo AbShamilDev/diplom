@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren } from "react";
-import { dataState } from "../../../../../redux/dataSlice/dataSlice";
 import * as SC from "./DataTable.style";
-import { useAppSelector } from "../../../../../redux/storeHooks";
+import { useAppSelector } from "@/redux/storeHooks";
 
 const DataTableTemplate: FC<PropsWithChildren> = ({ children }) => {
   const { editId } = useAppSelector((state) => state.editSlice);

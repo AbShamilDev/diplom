@@ -1,17 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "../TableEditors.style";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../../../../redux/storeHooks";
+import TableEditorTemplate from "../TableEditors";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import {
   setEditId,
   setIsFill,
   setIsLoading,
-} from "../../../../../../redux/editDbSlice/editDbSlice";
-import TableEditorTemplate from "../TableEditors";
-import axiosApp from "../../../../../../axios";
-import { getComponents } from "../../../../../../redux/dataSlice/dataSlice";
+} from "@/redux/editDbSlice/editDbSlice";
+import { getComponents } from "@/redux/dataSlice/dataSlice";
+import { axiosApp } from "@/axiosApp";
 
 interface paramsInterface {
   id?: number;
@@ -158,7 +155,9 @@ const ComponentsTableEditor = () => {
           >
             <option value="">Выберите отдел</option>
             {departments.map((dep) => (
-              <option value={dep.id}>{dep.name}</option>
+              <option key={`option3_${dep.name}`} value={dep.id}>
+                {dep.name}
+              </option>
             ))}
           </SC.noMarginSelect>
           <SC.noMarginSelect
@@ -169,7 +168,9 @@ const ComponentsTableEditor = () => {
           >
             <option value="">Выберите единицу измерения</option>
             {units.map((unit) => (
-              <option value={unit.id}>{unit.name}</option>
+              <option key={`unit_option_${unit.name}`} value={unit.id}>
+                {unit.name}
+              </option>
             ))}
           </SC.noMarginSelect>
           <SC.CostBlock>

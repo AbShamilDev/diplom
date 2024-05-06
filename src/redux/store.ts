@@ -1,4 +1,4 @@
-import { Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import dataSlice from "./dataSlice/dataSlice";
 import editDbSlice from "./editDbSlice/editDbSlice";
 

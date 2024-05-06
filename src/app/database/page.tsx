@@ -1,16 +1,12 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "../../../redux/storeHooks";
 import Tabs, { TabsProps } from "./_components/Tabs/Tabs";
 import * as SC from "./page.style";
-import { setData } from "../../../redux/dataSlice/dataSlice";
-import { useEffect, useState } from "react";
-import axiosApp from "../../../axios";
-import {
-  setEditId,
-  setIsFill,
-  setTab,
-} from "../../../redux/editDbSlice/editDbSlice";
+import { useEffect } from "react";
+import { axiosApp } from "@/axiosApp";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
+import { setData } from "@/redux/dataSlice/dataSlice";
+import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
 
 const DataBasePage = () => {
   const tabs: TabsProps["tab"][] = ["Установки", "Спецификации"];

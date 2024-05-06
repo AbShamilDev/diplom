@@ -1,12 +1,11 @@
 import Image from "next/image";
 import * as SC from "./ComponentsSelect.style";
 import { FC } from "react";
-import { dataState } from "../../../../../redux/dataSlice/dataSlice";
 import { FnTd, TdButton } from "../DataTables/DataTable.style";
-import { useAppSelector } from "../../../../../redux/storeHooks";
 import { CalculateTotalCost, convertToCost } from "@/app/globalFcns";
 import { Input } from "../TableEditors/TableEditors.style";
-import { constrainedMemory } from "process";
+import { dataState } from "@/redux/dataSlice/dataSlice";
+import { useAppSelector } from "@/redux/storeHooks";
 
 interface ComponentSelectProps {
   setComponents: (
