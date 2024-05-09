@@ -20,6 +20,7 @@ export interface dataState {
     name: string;
     description: string;
     cost: number;
+    alternatives: number[];
     department_id: number;
     unit_id: number;
   }[];
@@ -43,6 +44,13 @@ export const getSpecifications = createAsyncThunk(
   "getSpecifications",
   async () => {
     return await axiosApp.get("/specifications").then((res) => res.data);
+  }
+);
+
+export const getInstallations = createAsyncThunk(
+  "getInstallations",
+  async () => {
+    return await axiosApp.get("/installations").then((res) => res.data);
   }
 );
 
@@ -75,6 +83,9 @@ const dataSlice = createSlice({
     });
     builder.addCase(getSpecifications.fulfilled, (state, action) => {
       state.specifications = action.payload;
+    });
+    builder.addCase(getInstallations.fulfilled, (state, action) => {
+      state.instalations = action.payload;
     });
   },
 });

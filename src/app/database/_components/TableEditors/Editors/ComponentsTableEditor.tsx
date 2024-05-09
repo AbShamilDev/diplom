@@ -9,6 +9,7 @@ import {
 } from "@/redux/editDbSlice/editDbSlice";
 import { getComponents } from "@/redux/dataSlice/dataSlice";
 import { axiosApp } from "@/axiosApp";
+import AlternativesSelect from "../_components/AlternativesSelect/AlternativesSelect";
 
 interface paramsInterface {
   id?: number;
@@ -16,6 +17,7 @@ interface paramsInterface {
   description: string;
   department_id: number | string;
   unit_id: number | string;
+  alternatives: number[];
   cost: number | string;
 }
 
@@ -29,6 +31,7 @@ const ComponentsTableEditor = () => {
     description: "",
     department_id: "",
     unit_id: "",
+    alternatives: [],
     cost: "",
   });
   const dispatch = useAppDispatch();
@@ -36,13 +39,16 @@ const ComponentsTableEditor = () => {
   const onChangeHandle = (
     ev: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    console.log(ev.target.value);
     switch (ev.target.name) {
       case "name":
         setFields({ ...fields, name: ev.target.value });
         break;
       case "department":
-        setFields({ ...fields, department_id: ev.target.value });
+        setFields({
+          ...fields,
+          department_id: ev.target.value,
+          alternatives: [],
+        });
         break;
       case "unit":
         setFields({ ...fields, unit_id: ev.target.value });
@@ -56,6 +62,13 @@ const ComponentsTableEditor = () => {
       case "description":
         setFields({ ...fields, description: ev.target.value });
         break;
+      case "alternatives":
+        if (ev.target.value !== "")
+          setFields({
+            ...fields,
+            alternatives: [...fields.alternatives, +ev.target.value],
+          });
+        break;
       default:
         break;
     }
@@ -64,42 +77,31 @@ const ComponentsTableEditor = () => {
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     dispatch(setIsLoading(true));
-    const params: paramsInterface = {
-      name: fields.name,
-      description: fields.description,
-      department_id: fields.department_id,
-      unit_id: fields.unit_id,
-      cost: fields.cost,
-    };
 
     if (editId) {
-      params.id = editId;
       await axiosApp
-        .patch("/components", null, { params: params })
+        .patch("/components", null, { params: { ...fields, id: editId } })
         .then(() => {
           dispatch(setEditId(null));
           dispatch(getComponents());
-          dispatch(setIsLoading(false));
         })
-        .catch((err) => {
-          console.error(err);
-          dispatch(setIsLoading(false));
-        });
+        .catch((err) => console.error(err));
     } else
       await axiosApp
-        .post("/components", null, { params: params })
+        .post("/components", null, { params: fields })
         .then(() => {
           setFields({
             name: "",
             description: "",
             department_id: "",
             unit_id: "",
+            alternatives: [],
             cost: "",
           });
           dispatch(getComponents());
-          dispatch(setIsLoading(false));
         })
         .catch((err) => console.error(err));
+    dispatch(setIsLoading(false));
   };
 
   useEffect(() => {
@@ -108,6 +110,7 @@ const ComponentsTableEditor = () => {
       !fields.department_id &&
       !fields.description &&
       !fields.cost &&
+      !fields.alternatives.length &&
       !fields.unit_id
     ) {
       dispatch(setIsFill(false));
@@ -122,6 +125,7 @@ const ComponentsTableEditor = () => {
         description: component.description,
         department_id: component.department_id,
         unit_id: component.unit_id,
+        alternatives: component.alternatives,
         cost: `${component.cost}`,
       });
     } else {
@@ -130,6 +134,7 @@ const ComponentsTableEditor = () => {
         description: "",
         department_id: "",
         unit_id: "",
+        alternatives: [],
         cost: "",
       });
     }
@@ -138,60 +143,72 @@ const ComponentsTableEditor = () => {
   return (
     <TableEditorTemplate onSubmit={onSubmit}>
       <SC.SelectsContainer>
-        <SC.ColumnBlock>
-          <SC.Input
-            name="name"
-            placeholder="Название"
-            onChange={onChangeHandle}
-            value={fields.name}
-            required
-          />
-
-          <SC.noMarginSelect
-            name="department"
-            onChange={onChangeHandle}
-            value={fields.department_id}
-            required
-          >
-            <option value="">Выберите отдел</option>
-            {departments.map((dep) => (
-              <option key={`option3_${dep.name}`} value={dep.id}>
-                {dep.name}
-              </option>
-            ))}
-          </SC.noMarginSelect>
-          <SC.noMarginSelect
-            name="unit"
-            onChange={onChangeHandle}
-            value={fields.unit_id}
-            required
-          >
-            <option value="">Выберите единицу измерения</option>
-            {units.map((unit) => (
-              <option key={`unit_option_${unit.name}`} value={unit.id}>
-                {unit.name}
-              </option>
-            ))}
-          </SC.noMarginSelect>
-          <SC.CostBlock>
-            <SC.Input
-              name="cost"
-              placeholder="Цена"
-              type="number"
-              onChange={onChangeHandle}
-              value={fields.cost}
-              required
-            ></SC.Input>
-            <SC.CurrencySpan>₽</SC.CurrencySpan>
-          </SC.CostBlock>
-        </SC.ColumnBlock>
-        <SC.Textarea
-          name="description"
-          placeholder="Описание"
+        <SC.Input
+          name="name"
+          placeholder="Название"
           onChange={onChangeHandle}
-          value={fields.description}
+          value={fields.name}
           required
-        ></SC.Textarea>
+        />
+        <SC.NoMarginSelect
+          name="department"
+          onChange={onChangeHandle}
+          value={fields.department_id}
+          required
+        >
+          <option value="">Выберите отдел</option>
+          {departments.map((dep) => (
+            <option key={`option3_${dep.name}`} value={dep.id}>
+              {dep.name}
+            </option>
+          ))}
+        </SC.NoMarginSelect>
+        <SC.NoMarginSelect
+          style={{ gridArea: "select2" }}
+          name="unit"
+          onChange={onChangeHandle}
+          value={fields.unit_id}
+          required
+        >
+          <option value="">Выберите единицу измерения</option>
+          {units.map((unit) => (
+            <option key={`unit_option_${unit.name}`} value={unit.id}>
+              {unit.name}
+            </option>
+          ))}
+        </SC.NoMarginSelect>
+        <SC.CostBlock>
+          <SC.Input
+            name="cost"
+            placeholder="Цена"
+            type="number"
+            onChange={onChangeHandle}
+            value={fields.cost}
+            required
+          ></SC.Input>
+          <SC.CurrencySpan>₽</SC.CurrencySpan>
+        </SC.CostBlock>
+        <SC.ColumnBlock style={{ gridArea: "textarea" }}>
+          <SC.Textarea
+            name="description"
+            placeholder="Описание"
+            onChange={onChangeHandle}
+            value={fields.description}
+            required
+          ></SC.Textarea>
+          Альтернативы
+        </SC.ColumnBlock>
+        <AlternativesSelect
+          onChange={onChangeHandle}
+          onDelete={(id) =>
+            setFields({
+              ...fields,
+              alternatives: fields.alternatives.filter((altId) => altId !== id),
+            })
+          }
+          alternatives={fields.alternatives}
+          department_id={+fields.department_id}
+        />
       </SC.SelectsContainer>
     </TableEditorTemplate>
   );

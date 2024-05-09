@@ -15,14 +15,15 @@ export const Input = styled.input`
   border-radius: 10px;
   width: 100%;
   padding: 10px 15px;
+  grid-area: input;
 `;
 
 export const Textarea = styled.textarea`
   padding: 10px 15px;
   border: 1px solid #7b7b7b;
   outline: none;
-  height: 184px;
   flex: 1;
+  width: 100%;
   border-radius: 10px;
   resize: none;
 `;
@@ -37,9 +38,10 @@ export const Select = styled.select`
   border-radius: 10px;
 `;
 
-export const noMarginSelect = styled(Select)`
+export const NoMarginSelect = styled(Select)`
   margin-top: 0;
   margin-left: 0;
+  grid-area: select;
 `;
 
 export const SelectBlock = styled.div`
@@ -57,18 +59,23 @@ export const TopText = styled.span`
 `;
 
 export const SelectsContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template:
+    "input textarea"
+    "select textarea"
+    "select2 textarea"
+    "cost alternatives";
+  grid-gap: 10px;
+  grid-template-columns: 1fr 2fr;
   width: 100%;
-  align-items: end;
-  gap: 30px;
   padding: 10px 20px;
   font-weight: 500;
 `;
 
 export const ColumnBlock = styled.div`
   display: flex;
-  gap: 4px;
-  width: 30%;
+  gap: 15px;
+  width: 100%;
   flex-direction: column;
 `;
 
@@ -76,7 +83,18 @@ export const CostBlock = styled.div`
   display: flex;
   gap: 4px;
   width: 100%;
+  grid-area: cost;
   align-items: center;
+`;
+
+export const AltenativesBlock = styled(CostBlock)`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-area: alternatives;
+  align-items: start;
+  & > select {
+    grid-area: unset;
+  }
 `;
 
 export const CurrencySpan = styled.span`

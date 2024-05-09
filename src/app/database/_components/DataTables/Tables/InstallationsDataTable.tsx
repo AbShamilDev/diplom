@@ -1,18 +1,17 @@
-import { FC } from "react";
-import * as SC from "../DataTable.style";
 import DataTableTemplate from "../DataTableTemplate";
-import TdButton from "../_components/TdButton";
-import { convertToCost } from "@/app/globalFcns";
-import { dataState, getComponents } from "@/redux/dataSlice/dataSlice";
-import { setEditId } from "@/redux/editDbSlice/editDbSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import TabHeader from "./TableHeader/TableHeader";
+import * as SC from "../DataTable.style";
+import { dataState } from "@/redux/dataSlice/dataSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
+import { FC } from "react";
+import { setEditId } from "@/redux/editDbSlice/editDbSlice";
+import TdButton from "../_components/TdButton";
 
 interface ItemsProps {
-  items: dataState["components"];
+  items: dataState["instalations"];
 }
 
-const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
+const InstallationsDataTable: FC<ItemsProps> = ({ items }) => {
   const { editId } = useAppSelector((state) => state.editSlice);
   const { departments, units } = useAppSelector((state) => state.dataSlice);
   const dispatch = useAppDispatch();
@@ -28,11 +27,14 @@ const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
         <SC.ItemsTable>
           <thead>
             <tr>
-              <SC.TableHead>Имя</SC.TableHead>
-              <SC.TableHead>Описание</SC.TableHead>
-              <SC.TableHead>Цена</SC.TableHead>
-              <SC.TableHead>ЕИ</SC.TableHead>
-              <SC.TableHead>Отдел</SC.TableHead>
+              <SC.TableHead rowSpan={2}>Имя</SC.TableHead>
+              <SC.TableHead colSpan={3}>Спецификации</SC.TableHead>
+              <SC.TableHead rowSpan={2}>Фин. стоимость</SC.TableHead>
+            </tr>
+            <tr>
+              <SC.TableHead>АСУТП</SC.TableHead>
+              <SC.TableHead>Гидравлика</SC.TableHead>
+              <SC.TableHead>Блоки питания</SC.TableHead>
             </tr>
           </thead>
           <tbody>
@@ -43,11 +45,6 @@ const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
                   zIndex: editId === item.id ? 100 : 0,
                 }}
               >
-                <td>{item.name}</td>
-                <td>{item.description}</td>
-                <td>{convertToCost(item.cost)}</td>
-                <td>{units[item.unit_id - 1].name}</td>
-                <td>{departments[item.department_id - 1].name}</td>
                 <TdButton onClickEdit={() => onClickEdit(item.id)} />
               </tr>
             ))}
@@ -58,4 +55,4 @@ const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
   );
 };
 
-export default ComponentsDataTable;
+export default InstallationsDataTable;

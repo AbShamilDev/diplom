@@ -9,7 +9,7 @@ const Filters = () => {
     <SC.Container>
       <Search />
       <SC.DropdownsContainer>
-        <DropdownInput options={["1 канал", "2 канал"]} onChange={() => {}} />
+        <DropdownInput options={["1 линия", "2 линия"]} onChange={() => {}} />
         <DropdownInput options={["10", "20", "30"]} onChange={() => {}} />
         <DropdownInput
           options={["Еще не придумал", "Не придумал говорю же"]}

@@ -1,7 +1,7 @@
 import Filters from "./_components/Filters/Filters";
 
-const FiltersPage = () => {
+const ProjectsPage = () => {
   return <Filters />;
 };
 
-export default FiltersPage;
+export default ProjectsPage;

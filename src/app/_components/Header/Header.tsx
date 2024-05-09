@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const buttons = [
   { text: "база данных", route: "database" },
-  { text: "фильтры", route: "filters" },
+  { text: "проекты", route: "projects" },
 ];
 
 const Header = () => {

@@ -34,5 +34,6 @@ export const tabDiv = styled.button<{ offset: number; active: boolean }>`
   cursor: ${(props) => (props.active ? "default" : "pointer")};
   background-color: ${(props) => (props.active ? "white" : "transparent")};
   z-index: ${(props) => (props.active ? 10 : -10)};
+  pointer-events: ${(props) => (props.active ? "none" : "all")};
   transition: ease 0.2s;
 `;

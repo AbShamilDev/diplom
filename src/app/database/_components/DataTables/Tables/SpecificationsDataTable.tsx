@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import * as SC from "../DataTable.style";
 import Image from "next/image";
 import { CalculateTotalCost } from "@/app/globalFcns";
@@ -6,6 +6,7 @@ import TabHeader from "./TableHeader/TableHeader";
 import { dataState } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { setEditId } from "@/redux/editDbSlice/editDbSlice";
+import TdButton from "../_components/TdButton";
 
 interface Props {
   items: dataState["specifications"];
@@ -15,12 +16,13 @@ const SpecificationsDataTable: FC<Props> = ({ items }) => {
   const { departments, components } = useAppSelector(
     (state) => state.dataSlice
   );
-  const { editId } = useAppSelector((state) => state.editSlice);
+  const { editId, departmentFilter } = useAppSelector(
+    (state) => state.editSlice
+  );
+  const [filteredItems, setFilteredItems] = useState(
+    items.filter((item) => item.department_id === departmentFilter)
+  );
   const dispatch = useAppDispatch();
-
-  const onClickDelete = (id: number) => {
-    editId ? dispatch(setEditId(null)) : dispatch(setEditId(id));
-  };
 
   const onClickEdit = (id: number) => {
     editId ? dispatch(setEditId(null)) : dispatch(setEditId(id));
@@ -36,9 +38,15 @@ const SpecificationsDataTable: FC<Props> = ({ items }) => {
     return result;
   };
 
+  useEffect(() => {
+    setFilteredItems(
+      items.filter((item) => item.department_id === departmentFilter)
+    );
+  }, [departmentFilter, items]);
+
   return (
     <>
-      <TabHeader items={items} showComponents />
+      <TabHeader items={filteredItems} showComponents />
       <SC.ScrollTableContainer>
         <div
           style={{
@@ -66,7 +74,7 @@ const SpecificationsDataTable: FC<Props> = ({ items }) => {
           <tbody>
             {/* FIXME: ЗАМЕНИТЬ НА specifications.length */}
             {components.length
-              ? items.map((item) => (
+              ? filteredItems.map((item) => (
                   <tr
                     key={`${item.name}_${item.id}`}
                     style={{
@@ -82,26 +90,7 @@ const SpecificationsDataTable: FC<Props> = ({ items }) => {
                           ?.name
                       }
                     </td>
-                    <SC.FnTd>
-                      <SC.TdButton onClick={() => {}}>
-                        <Image
-                          src="/images/delete.svg"
-                          alt="edit"
-                          width={24}
-                          height={24}
-                        />
-                      </SC.TdButton>
-                    </SC.FnTd>
-                    <SC.FnTd>
-                      <SC.TdButton onClick={() => onClickEdit(item.id)}>
-                        <Image
-                          src="/images/edit.svg"
-                          alt="edit"
-                          width={24}
-                          height={24}
-                        />
-                      </SC.TdButton>
-                    </SC.FnTd>
+                    <TdButton onClickEdit={() => onClickEdit(item.id)} />
                   </tr>
                 ))
               : null}

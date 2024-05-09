@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import { Input } from "../TableEditors/TableEditors.style";
-import { Button } from "../Tabs/Tabs.style";
+import { Input } from "../../TableEditors.style";
+import { Button } from "../../../Tabs/Tabs.style";
 
 export const ComponentsSelectContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  margin: 15px 0;
 `;
 
 export const ComponentsTable = styled.table`
@@ -58,5 +59,18 @@ export const AvaliableComponentsContainer = styled.div`
 `;
 
 export const ComponentChip = styled(Button)`
-  padding: 5px 10px;
+  display: flex;
+  padding: 0;
+`;
+
+export const ComponentName = styled.span`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  color: inherit;
+`;
+
+export const ComponentCost = styled(ComponentName)`
+  border-left: 2px solid #345dae;
 `;

@@ -6,6 +6,7 @@ import InstallationsTableEditor from "../TableEditors/Editors/InstallationsTable
 import SpecificationsTableEditor from "../TableEditors/Editors/SpecificationsTableEditor";
 import ComponentsTableEditor from "../TableEditors/Editors/ComponentsTableEditor";
 import SpecificationsDataTable from "../DataTables/Tables/SpecificationsDataTable";
+import InstallationsDataTable from "../DataTables/Tables/InstallationsDataTable";
 
 export interface TabsProps {
   tab: "Установки" | "Спецификации" | "Компоненты";
@@ -19,11 +20,12 @@ const Tabs: FC<TabsProps> = ({ tab }) => {
   useEffect(() => {
     switch (tab) {
       case "Установки":
-        console.log("УСТАНОВКИ");
         setChoosedTemplate(<InstallationsTableEditor />);
+        setChoosedTable(
+          <InstallationsDataTable items={dataSlice.instalations} />
+        );
         break;
       case "Спецификации":
-        console.log("СПЕЦИФИКАЦИИ");
         setChoosedTemplate(<SpecificationsTableEditor />);
         setChoosedTable(
           <SpecificationsDataTable items={dataSlice.specifications} />
@@ -32,7 +34,6 @@ const Tabs: FC<TabsProps> = ({ tab }) => {
       case "Компоненты":
         setChoosedTemplate(<ComponentsTableEditor />);
         setChoosedTable(<ComponentsDataTable items={dataSlice.components} />);
-
         break;
       default:
         break;
