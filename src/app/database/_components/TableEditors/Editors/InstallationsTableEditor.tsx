@@ -16,6 +16,7 @@ interface paramsInterface {
   fst_specification_id: number;
   snd_specification_id: number;
   trd_specification_id: number;
+  two_lines: boolean;
 }
 
 const InstallationsTableEditor = () => {
@@ -24,6 +25,7 @@ const InstallationsTableEditor = () => {
     fst_specification_id: 0,
     snd_specification_id: 0,
     trd_specification_id: 0,
+    two_lines: false,
   });
 
   const dispatch = useAppDispatch();
@@ -83,6 +85,7 @@ const InstallationsTableEditor = () => {
             fst_specification_id: 0,
             snd_specification_id: 0,
             trd_specification_id: 0,
+            two_lines: false,
           });
           dispatch(getInstallations());
         })
@@ -95,7 +98,8 @@ const InstallationsTableEditor = () => {
       fields.name === "" &&
       fields.fst_specification_id === 0 &&
       fields.snd_specification_id === 0 &&
-      fields.trd_specification_id === 0
+      fields.trd_specification_id === 0 &&
+      !fields.two_lines
     ) {
       dispatch(setIsFill(false));
     } else !isFill && dispatch(setIsFill(true));
@@ -109,7 +113,9 @@ const InstallationsTableEditor = () => {
         value={fields.name}
         onChange={onChangeHandle}
       ></SC.Input>
-      <SC.BlockText>Спецификации:</SC.BlockText>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <SC.BlockText>Спецификации:</SC.BlockText>
+      </div>
       <SC.SelectsContainer style={{ display: "flex" }}>
         {departments.map((dep, i) => {
           return (
@@ -133,6 +139,10 @@ const InstallationsTableEditor = () => {
             </SC.SelectBlock>
           );
         })}
+        <SC.ColumnBlock style={{ margin: "0 20px" }}>
+          <label htmlFor="twolines">2 линии</label>
+          <SC.CheckBox type="checkbox" name="twolines" id="twolines" />
+        </SC.ColumnBlock>
       </SC.SelectsContainer>
     </TableEditorTemplate>
   );

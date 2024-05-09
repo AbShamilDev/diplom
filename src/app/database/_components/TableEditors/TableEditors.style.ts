@@ -75,7 +75,6 @@ export const SelectsContainer = styled.div`
 export const ColumnBlock = styled.div`
   display: flex;
   gap: 15px;
-  width: 100%;
   flex-direction: column;
 `;
 
@@ -100,4 +99,19 @@ export const AltenativesBlock = styled(CostBlock)`
 export const CurrencySpan = styled.span`
   margin: 0 5px;
   font-size: 20px;
+`;
+
+export const CheckBoxContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0 10px;
+  & > input {
+    width: 20px;
+  }
+`;
+
+export const CheckBox = styled.input`
+  width: 20px;
+  height: 20px;
 `;
