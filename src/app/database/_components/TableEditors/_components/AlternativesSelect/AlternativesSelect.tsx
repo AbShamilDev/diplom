@@ -49,7 +49,11 @@ const AlternativesSelect: FC<Props> = ({
         {alternatives.map((altId) => {
           const component = components.filter((comp) => comp.id === altId)[0];
           return (
-            <ComponentChip type="button" onClick={() => onDelete(altId)}>
+            <ComponentChip
+              key={`alternative_chip_${altId}`}
+              type="button"
+              onClick={() => onDelete(altId)}
+            >
               <ComponentName>{component.name}</ComponentName>
               <ComponentCost>
                 {convertToCost(component.cost)}

@@ -6,7 +6,7 @@ import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
 import DepartmentSwitch from "../../_components/DepartmentSwitch/DepartmentSwitch";
 
 interface Props {
-  items: dataState["components" | "instalations" | "specifications"];
+  items: dataState["components" | "installations" | "specifications"];
   showComponents?: boolean;
 }
 

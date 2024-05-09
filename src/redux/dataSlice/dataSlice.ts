@@ -2,7 +2,7 @@ import { axiosApp } from "@/axiosApp";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface dataState {
-  instalations: {
+  installations: {
     id: number;
     name: string;
     fst_specification_id: number;
@@ -29,7 +29,7 @@ export interface dataState {
 }
 
 const initialState: dataState = {
-  instalations: [],
+  installations: [],
   specifications: [],
   components: [],
   departments: [],
@@ -61,8 +61,8 @@ const dataSlice = createSlice({
     setData: (state, action) => {
       return action.payload;
     },
-    setInstalations: (state, action) => {
-      state.instalations = action.payload;
+    setinstallations: (state, action) => {
+      state.installations = action.payload;
     },
     setSpecifications: (state, action) => {
       state.specifications = action.payload;
@@ -71,7 +71,7 @@ const dataSlice = createSlice({
       state.components = action.payload;
     },
     addInstalation: (state, action) => {
-      state.instalations.push(action.payload);
+      state.installations.push(action.payload);
     },
     addSpecification: (state, action) => {
       state.specifications.push(action.payload);
@@ -85,7 +85,7 @@ const dataSlice = createSlice({
       state.specifications = action.payload;
     });
     builder.addCase(getInstallations.fulfilled, (state, action) => {
-      state.instalations = action.payload;
+      state.installations = action.payload;
     });
   },
 });
@@ -93,7 +93,7 @@ const dataSlice = createSlice({
 export default dataSlice.reducer;
 export const {
   setData,
-  setInstalations,
+  setinstallations,
   setSpecifications,
   setComponents,
   addInstalation,

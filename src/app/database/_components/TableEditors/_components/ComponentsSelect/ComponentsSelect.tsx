@@ -110,7 +110,8 @@ const ComponentsSelect: FC<ComponentSelectProps> = ({
               </SC.ComponentChip>
             ))}
         </SC.AvaliableComponentsContainer>
-        Общая цена: {CalculateTotalCost(choosedComponents, components)}
+        Общая цена:{" "}
+        {convertToCost(CalculateTotalCost(choosedComponents, components))}
       </SC.ButtonAndCost>
     </SC.ComponentsSelectContainer>
   );

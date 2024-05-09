@@ -7,7 +7,7 @@ import {
   setIsFill,
   setIsLoading,
 } from "@/redux/editDbSlice/editDbSlice";
-import { getComponents, getInstallations } from "@/redux/dataSlice/dataSlice";
+import { getInstallations } from "@/redux/dataSlice/dataSlice";
 import { axiosApp } from "@/axiosApp";
 
 interface paramsInterface {
@@ -84,7 +84,7 @@ const InstallationsTableEditor = () => {
             snd_specification_id: 0,
             trd_specification_id: 0,
           });
-          dispatch(getComponents());
+          dispatch(getInstallations());
         })
         .catch((err) => console.error(err));
     dispatch(setIsLoading(false));
@@ -103,7 +103,12 @@ const InstallationsTableEditor = () => {
 
   return (
     <TableEditorTemplate onSubmit={onSubmit}>
-      <SC.Input name="name" placeholder="Введите имя"></SC.Input>
+      <SC.Input
+        name="name"
+        placeholder="Введите имя"
+        value={fields.name}
+        onChange={onChangeHandle}
+      ></SC.Input>
       <SC.BlockText>Спецификации:</SC.BlockText>
       <SC.SelectsContainer style={{ display: "flex" }}>
         {departments.map((dep, i) => {

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import * as SC from "../DataTable.style";
 import Image from "next/image";
-import { CalculateTotalCost } from "@/app/globalFcns";
+import { CalculateTotalCost, convertToCost } from "@/app/globalFcns";
 import TabHeader from "./TableHeader/TableHeader";
 import { dataState } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
@@ -83,7 +83,11 @@ const SpecificationsDataTable: FC<Props> = ({ items }) => {
                   >
                     <td>{item.name}</td>
                     <td>{TotalQuantity(item.components)}</td>
-                    <td>{CalculateTotalCost(item.components, components)}</td>
+                    <td>
+                      {convertToCost(
+                        CalculateTotalCost(item.components, components)
+                      )}
+                    </td>
                     <td>
                       {
                         departments.find((el) => el.id === item.department_id)

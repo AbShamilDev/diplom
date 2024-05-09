@@ -22,7 +22,7 @@ const Tabs: FC<TabsProps> = ({ tab }) => {
       case "Установки":
         setChoosedTemplate(<InstallationsTableEditor />);
         setChoosedTable(
-          <InstallationsDataTable items={dataSlice.instalations} />
+          <InstallationsDataTable items={dataSlice.installations} />
         );
         break;
       case "Спецификации":
