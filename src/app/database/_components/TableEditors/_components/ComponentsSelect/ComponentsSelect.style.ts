@@ -18,7 +18,7 @@ export const ComponentsTable = styled.table`
   td {
     padding: 2px 10px;
   }
-  & > * {
+  & tr {
     border-bottom: 1px solid #0002;
   }
 

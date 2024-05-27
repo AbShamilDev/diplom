@@ -7,20 +7,23 @@ import { dataState, getComponents } from "@/redux/dataSlice/dataSlice";
 import { setEditId } from "@/redux/editDbSlice/editDbSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import TabHeader from "./TableHeader/TableHeader";
+import Image from "next/image";
 
 interface ItemsProps {
   items: dataState["components"];
 }
 
 const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
-  const { editId } = useAppSelector((state) => state.editSlice);
-  const { departments, units } = useAppSelector((state) => state.dataSlice);
+  const { editId, departmentFilter } = useAppSelector(
+    (state) => state.editSlice
+  );
+  const { units } = useAppSelector((state) => state.dataSlice);
   const dispatch = useAppDispatch();
 
   const onClickEdit = (id: number) => {
     editId ? dispatch(setEditId(null)) : dispatch(setEditId(id));
   };
-
+  console.log(departmentFilter);
   return (
     <>
       <TabHeader items={items} />
@@ -32,25 +35,29 @@ const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
               <SC.TableHead>Описание</SC.TableHead>
               <SC.TableHead>Цена</SC.TableHead>
               <SC.TableHead>ЕИ</SC.TableHead>
-              <SC.TableHead>Отдел</SC.TableHead>
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr
-                key={`${item.id}_${item.name}`}
-                style={{
-                  zIndex: editId === item.id ? 100 : 0,
-                }}
-              >
-                <td>{item.name}</td>
-                <td>{item.description}</td>
-                <td>{convertToCost(item.cost)}</td>
-                <td>{units[item.unit_id - 1].name}</td>
-                <td>{departments[item.department_id - 1].name}</td>
-                <TdButton onClickEdit={() => onClickEdit(item.id)} />
-              </tr>
-            ))}
+            {items
+              .filter((el) => el.department_id === departmentFilter)
+              .map((item) => (
+                <tr
+                  key={`${item.id}_${item.name}`}
+                  style={{
+                    zIndex: editId === item.id ? 100 : 0,
+                  }}
+                >
+                  <td>{item.name}</td>
+                  <td>{item.description}</td>
+                  <td>{convertToCost(item.cost)}</td>
+                  <td>{units[item.unit_id - 1].name}</td>
+                  <TdButton
+                    onClickEdit={() => onClickEdit(item.id)}
+                    linkEnable
+                    link={item.link}
+                  />
+                </tr>
+              ))}
           </tbody>
         </SC.ItemsTable>
       </DataTableTemplate>

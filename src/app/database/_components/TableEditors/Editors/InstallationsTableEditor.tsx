@@ -29,7 +29,7 @@ const InstallationsTableEditor = () => {
   });
 
   const dispatch = useAppDispatch();
-  const { specifications, departments } = useAppSelector(
+  const { specifications, departments, installations } = useAppSelector(
     (state) => state.dataSlice
   );
   const { isFill, editId } = useAppSelector((state) => state.editSlice);
@@ -59,6 +59,14 @@ const InstallationsTableEditor = () => {
           ...fields,
           trd_specification_id: ev.target.value === "" ? 0 : +ev.target.value,
         });
+        break;
+      case "two_lines":
+        if (ev.target instanceof HTMLInputElement) {
+          setFields({
+            ...fields,
+            two_lines: ev.target.checked,
+          });
+        }
         break;
       default:
         break;
@@ -105,6 +113,25 @@ const InstallationsTableEditor = () => {
     } else !isFill && dispatch(setIsFill(true));
   }, [fields]);
 
+  useEffect(() => {
+    if (editId) {
+      const installation = installations.filter((el) => el.id === editId)[0];
+      setFields({
+        name: installation.name,
+        fst_specification_id: installation.fst_specification_id,
+        snd_specification_id: installation.snd_specification_id,
+        trd_specification_id: installation.trd_specification_id,
+        two_lines: !!installation.two_lines,
+      });
+    } else
+      setFields({
+        name: "",
+        fst_specification_id: 0,
+        snd_specification_id: 0,
+        trd_specification_id: 0,
+        two_lines: false,
+      });
+  }, [editId]);
   return (
     <TableEditorTemplate onSubmit={onSubmit}>
       <SC.Input
@@ -125,6 +152,13 @@ const InstallationsTableEditor = () => {
                 key={`installSpec_for_${dep.name}`}
                 name={`spec-${i + 1}`}
                 required
+                value={
+                  i === 0
+                    ? fields.fst_specification_id
+                    : i === 1
+                    ? fields.snd_specification_id
+                    : fields.trd_specification_id
+                }
                 onChange={onChangeHandle}
               >
                 <option value="">Выберите спецификацию</option>
@@ -140,8 +174,14 @@ const InstallationsTableEditor = () => {
           );
         })}
         <SC.ColumnBlock style={{ margin: "0 20px" }}>
-          <label htmlFor="twolines">2 линии</label>
-          <SC.CheckBox type="checkbox" name="twolines" id="twolines" />
+          <label htmlFor="two_lines">2 линии</label>
+          <SC.CheckBox
+            type="checkbox"
+            name="two_lines"
+            id="two_lines"
+            checked={fields.two_lines}
+            onChange={onChangeHandle}
+          />
         </SC.ColumnBlock>
       </SC.SelectsContainer>
     </TableEditorTemplate>

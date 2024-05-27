@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import dataSlice from "./dataSlice/dataSlice";
 import editDbSlice from "./editDbSlice/editDbSlice";
+import projectsFilterSlice from "./projectsFilterSlice/projectsFilterSlice";
 
 const rootReducer = combineReducers({
   dataSlice: dataSlice,
   editSlice: editDbSlice,
+  projectFilter: projectsFilterSlice,
 });
 
 export const makeStore = () => {

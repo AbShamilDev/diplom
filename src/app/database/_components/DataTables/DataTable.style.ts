@@ -30,7 +30,7 @@ export const TableHead = styled.th`
 `;
 
 export const FnTd = styled.td`
-  width: 55px;
+  width: 44px;
   border: none !important;
   background-color: transparent !important;
   padding: 0 5px !important;

@@ -12,7 +12,7 @@ interface Props {
 
 const TabHeader: FC<Props> = ({ items, showComponents }) => {
   const dispatch = useAppDispatch();
-  const { editId, isFill } = useAppSelector((state) => state.editSlice);
+  const { editId, isFill, tab } = useAppSelector((state) => state.editSlice);
 
   const onClickLink = () => {
     if (editId !== null || isFill)
@@ -27,11 +27,9 @@ const TabHeader: FC<Props> = ({ items, showComponents }) => {
   return (
     <TopContainer>
       <Title>Количество записей: {items.length}</Title>
+      {tab !== "Установки" && <DepartmentSwitch />}
       {showComponents && (
-        <>
-          <DepartmentSwitch />
-          <ToComponentsLink onClick={onClickLink}>Компоненты</ToComponentsLink>
-        </>
+        <ToComponentsLink onClick={onClickLink}>Компоненты</ToComponentsLink>
       )}
     </TopContainer>
   );

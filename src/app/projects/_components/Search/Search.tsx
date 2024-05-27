@@ -7,7 +7,7 @@ const Search = () => {
   return (
     <SC.SearchContainer>
       <Image src={"/images/search.svg"} alt={"search"} width={24} height={24} />
-      <SC.SearchInput placeholder="Введите наименование установки или спецификации" />
+      <SC.SearchInput placeholder="Ввелите наименование проекта" />
     </SC.SearchContainer>
   );
 };

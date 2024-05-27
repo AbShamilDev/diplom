@@ -13,29 +13,27 @@ import Image from "next/image";
 interface Props {
   onChange: (ev: ChangeEvent<HTMLSelectElement>) => void;
   onDelete: (id: number) => void;
-  department_id: number;
   alternatives: number[];
 }
 
 const AlternativesSelect: FC<Props> = ({
   onChange,
   onDelete,
-  department_id,
   alternatives,
 }) => {
   const components = useAppSelector((state) => state.dataSlice.components);
-  const editId = useAppSelector((state) => state.editSlice.editId);
+  const { editId, departmentFilter } = useAppSelector(
+    (state) => state.editSlice
+  );
 
   return (
     <AltenativesBlock>
       <NoMarginSelect name="alternatives" onChange={onChange}>
-        <option value="">
-          {!department_id ? "Выберите отдел" : "Выбертите альтернативы"}
-        </option>
+        <option value="">Выбертите альтернативы</option>
         {components
           .filter(
             (comp) =>
-              comp.department_id === +department_id &&
+              comp.department_id === +departmentFilter &&
               (!editId || editId !== comp.id) &&
               !alternatives.some((id) => id === comp.id)
           )
@@ -47,7 +45,8 @@ const AlternativesSelect: FC<Props> = ({
       </NoMarginSelect>
       <AvaliableComponentsContainer style={{ width: "100%" }}>
         {alternatives.map((altId) => {
-          const component = components.filter((comp) => comp.id === altId)[0];
+          const component = components.filter((comp) => +comp.id === +altId)[0];
+          console.log(alternatives, components);
           return (
             <ComponentChip
               key={`alternative_chip_${altId}`}
@@ -58,7 +57,7 @@ const AlternativesSelect: FC<Props> = ({
               <ComponentCost>
                 {convertToCost(component.cost)}
                 <Image
-                  src="/images/delete.svg"
+                  src="/images/delete_white.svg"
                   width={20}
                   height={20}
                   alt="delete"

@@ -15,7 +15,6 @@ export const Input = styled.input`
   border-radius: 10px;
   width: 100%;
   padding: 10px 15px;
-  grid-area: input;
 `;
 
 export const Textarea = styled.textarea`
@@ -61,9 +60,9 @@ export const TopText = styled.span`
 export const SelectsContainer = styled.div`
   display: grid;
   grid-template:
-    "input textarea"
+    "name textarea"
+    "link textarea"
     "select textarea"
-    "select2 textarea"
     "cost alternatives";
   grid-gap: 10px;
   grid-template-columns: 1fr 2fr;

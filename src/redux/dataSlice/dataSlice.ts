@@ -2,12 +2,20 @@ import { axiosApp } from "@/axiosApp";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface dataState {
+  projects: {
+    id: number;
+    client: string;
+    installation_id: number;
+    budget: number;
+    start_date: string;
+  }[];
   installations: {
     id: number;
     name: string;
     fst_specification_id: number;
     snd_specification_id: number;
     trd_specification_id: number;
+    two_lines: boolean;
   }[];
   specifications: {
     id: number;
@@ -23,17 +31,26 @@ export interface dataState {
     alternatives: number[];
     department_id: number;
     unit_id: number;
+    link: string;
   }[];
   departments: { id: number; name: string }[];
   units: { id: number; name: string }[];
+  clients: {
+    id: number;
+    name: string;
+    phone_number?: string;
+    email?: string;
+  }[];
 }
 
 const initialState: dataState = {
+  projects: [],
   installations: [],
   specifications: [],
   components: [],
   departments: [],
   units: [],
+  clients: [],
 };
 
 export const getComponents = createAsyncThunk("getComponents", async () => {
@@ -53,6 +70,10 @@ export const getInstallations = createAsyncThunk(
     return await axiosApp.get("/installations").then((res) => res.data);
   }
 );
+
+export const getProjects = createAsyncThunk("getProjects", async () => {
+  return await axiosApp.get("/projects").then((res) => res.data);
+});
 
 const dataSlice = createSlice({
   name: "data",
@@ -86,6 +107,9 @@ const dataSlice = createSlice({
     });
     builder.addCase(getInstallations.fulfilled, (state, action) => {
       state.installations = action.payload;
+    });
+    builder.addCase(getProjects.fulfilled, (state, action) => {
+      state.projects = action.payload;
     });
   },
 });

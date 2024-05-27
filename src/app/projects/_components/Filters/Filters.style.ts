@@ -9,7 +9,7 @@ export const Container = styled.div`
   padding: 10px 14%;
 `;
 
-export const DropdownsContainer = styled.div`
+export const FiltersContainer = styled.div`
   display: flex;
   width: 70%;
   gap: 10px;

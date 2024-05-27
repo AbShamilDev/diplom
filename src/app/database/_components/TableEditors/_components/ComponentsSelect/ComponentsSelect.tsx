@@ -96,7 +96,11 @@ const ComponentsSelect: FC<ComponentSelectProps> = ({
           {components
             .filter(
               (el) =>
-                !choosedComponents.some((choosed) => +choosed.id === el.id)
+                !choosedComponents.some(
+                  (choosed) =>
+                    +choosed.id === el.id ||
+                    el.alternatives.some((altId) => +altId === choosed.id)
+                )
             )
             .map((comp) => (
               <SC.ComponentChip
