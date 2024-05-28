@@ -59,8 +59,17 @@ export const TopContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const ToComponentsLink = styled.span`
+export const SpanGrayButton = styled.button`
   cursor: pointer;
+  position: absolute;
+  right: -15px;
+  top: 5px;
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
   color: #000a;
+  display: flex;
+  height: fit-content;
+  padding: 3px;
   margin-right: 30px;
 `;

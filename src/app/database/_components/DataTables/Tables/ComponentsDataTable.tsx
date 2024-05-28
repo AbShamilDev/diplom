@@ -3,11 +3,10 @@ import * as SC from "../DataTable.style";
 import DataTableTemplate from "../DataTableTemplate";
 import TdButton from "../_components/TdButton";
 import { convertToCost } from "@/app/globalFcns";
-import { dataState, getComponents } from "@/redux/dataSlice/dataSlice";
+import { dataState } from "@/redux/dataSlice/dataSlice";
 import { setEditId } from "@/redux/editDbSlice/editDbSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import TabHeader from "./TableHeader/TableHeader";
-import Image from "next/image";
 
 interface ItemsProps {
   items: dataState["components"];

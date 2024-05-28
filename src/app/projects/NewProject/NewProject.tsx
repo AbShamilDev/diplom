@@ -3,7 +3,12 @@ import { ClassicWrapper } from "@/app/_components/ClassicWrapper/ClassicWrapper"
 import * as SC from "./NewProject.style";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { dataState, getProjects } from "@/redux/dataSlice/dataSlice";
+import {
+  dataState,
+  getInstallations,
+  getProjects,
+  getSpecifications,
+} from "@/redux/dataSlice/dataSlice";
 import { convertToCost } from "@/app/globalFcns";
 import ProjectTable from "./_components/ProjectTable/ProjectTable";
 import { Button } from "@/app/database/_components/Tabs/Tabs.style";
@@ -35,7 +40,7 @@ export interface projectInfo {
     components?: ComponentWithQuantity[];
   };
   budget?: number;
-  client: string;
+  client_id: number;
   start_date: Date | null | undefined;
 }
 
@@ -45,7 +50,7 @@ const NewProject = () => {
     fst_spec: { edited: false },
     snd_spec: { edited: false },
     trd_spec: { edited: false },
-    client: "",
+    client_id: 0,
     budget: 1,
     start_date: new Date(),
   });
@@ -59,7 +64,7 @@ const NewProject = () => {
       fst_spec: { edited: false },
       snd_spec: { edited: false },
       trd_spec: { edited: false },
-      client: "",
+      client_id: 0,
       start_date: new Date(),
     });
   };
@@ -166,6 +171,8 @@ const NewProject = () => {
     await axiosApp
       .post("/projects", null, { params: projectInfo })
       .then(() => {
+        dispatch(getSpecifications());
+        dispatch(getInstallations());
         dispatch(getProjects());
         resetProjectInfo();
       })
@@ -201,16 +208,19 @@ const NewProject = () => {
           <ProjectTable
             spec_components={projectInfo.fst_spec.components}
             name="fst_spec"
+            isEditor
             onSelectAlternative={onSelectAlternative}
           />
           <ProjectTable
             spec_components={projectInfo.snd_spec.components}
             name="snd_spec"
+            isEditor
             onSelectAlternative={onSelectAlternative}
           />
           <ProjectTable
             spec_components={projectInfo.trd_spec.components}
             name="trd_spec"
+            isEditor
             onSelectAlternative={onSelectAlternative}
           />
         </SC.TablesBlock>
@@ -229,13 +239,14 @@ const NewProject = () => {
                   {convertToCost(totalCost)}
                 </SC.Cost>
               </SC.FooterContainer>
-              {projectInfo.budget && totalCost > projectInfo.budget ? (
-                <Button type="button" onClick={() => onClickMinimalHandle()}>
-                  Минимальная конфигурация
-                </Button>
-              ) : (
-                <Button type="submit">Создать проект</Button>
-              )}
+              {projectInfo.budget &&
+                (totalCost > projectInfo.budget ? (
+                  <Button type="button" onClick={() => onClickMinimalHandle()}>
+                    Минимальная конфигурация
+                  </Button>
+                ) : (
+                  <Button type="submit">Создать проект</Button>
+                ))}
             </>
           )}
         </SC.SettingForm>

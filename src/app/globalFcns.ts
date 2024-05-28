@@ -24,27 +24,24 @@ export const CalculateInstallation = (
   specifications: dataState["specifications"],
   components: dataState["components"]
 ) => {
-  const fst_cost = specifications
-    .filter((spec) => spec.id === installation.fst_specification_id)[0]
-    .components.reduce(
-      (acc, cur) =>
-        acc + components.filter((comp) => comp.id === +cur.id)[0].cost,
-      0
-    );
-  const snd_cost = specifications
-    .filter((spec) => spec.id === installation.snd_specification_id)[0]
-    .components.reduce(
-      (acc, cur) =>
-        acc + components.filter((comp) => comp.id === +cur.id)[0].cost,
-      0
-    );
-  const trd_cost = specifications
-    .filter((spec) => spec.id === installation.trd_specification_id)[0]
-    .components.reduce(
-      (acc, cur) =>
-        acc + components.filter((comp) => comp.id === +cur.id)[0].cost,
-      0
-    );
+  const fst_cost = CalculateTotalCost(
+    specifications.filter(
+      (spec) => spec.id === installation.fst_specification_id
+    )[0].components,
+    components
+  );
+  const snd_cost = CalculateTotalCost(
+    specifications.filter(
+      (spec) => spec.id === installation.snd_specification_id
+    )[0].components,
+    components
+  );
+  const trd_cost = CalculateTotalCost(
+    specifications.filter(
+      (spec) => spec.id === installation.trd_specification_id
+    )[0].components,
+    components
+  );
 
   return (
     fst_cost + snd_cost + (installation.two_lines ? trd_cost * 2 : trd_cost)

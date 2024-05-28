@@ -21,6 +21,7 @@ const TdButton: FC<Props> = ({ onClickEdit, linkEnable, link }) => {
           <a
             href={link}
             target="_blank"
+            rel="noreferrer"
             aria-disabled
             style={link ? {} : { opacity: "40%", pointerEvents: "none" }}
           >

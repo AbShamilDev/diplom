@@ -1,12 +1,16 @@
 import { FC } from "react";
-import { TopContainer, Title, ToComponentsLink } from "../../DataTable.style";
+import { TopContainer, Title, SpanGrayButton } from "../../DataTable.style";
 import { dataState } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
 import DepartmentSwitch from "../../_components/DepartmentSwitch/DepartmentSwitch";
 
 interface Props {
-  items: dataState["components" | "installations" | "specifications"];
+  items: dataState[
+    | "components"
+    | "installations"
+    | "specifications"
+    | "clients"];
   showComponents?: boolean;
 }
 
@@ -29,7 +33,7 @@ const TabHeader: FC<Props> = ({ items, showComponents }) => {
       <Title>Количество записей: {items.length}</Title>
       {tab !== "Установки" && <DepartmentSwitch />}
       {showComponents && (
-        <ToComponentsLink onClick={onClickLink}>Компоненты</ToComponentsLink>
+        <SpanGrayButton onClick={onClickLink}>Компоненты</SpanGrayButton>
       )}
     </TopContainer>
   );

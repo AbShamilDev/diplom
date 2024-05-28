@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export interface dataState {
   projects: {
     id: number;
-    client: string;
+    client_id: number;
     installation_id: number;
     budget: number;
     start_date: string;
@@ -75,6 +75,10 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
   return await axiosApp.get("/projects").then((res) => res.data);
 });
 
+export const getClients = createAsyncThunk("getClients", async () => {
+  return await axiosApp.get("/clients").then((res) => res.data);
+});
+
 const dataSlice = createSlice({
   name: "data",
   initialState,
@@ -110,6 +114,9 @@ const dataSlice = createSlice({
     });
     builder.addCase(getProjects.fulfilled, (state, action) => {
       state.projects = action.payload;
+    });
+    builder.addCase(getClients.fulfilled, (state, action) => {
+      state.clients = action.payload;
     });
   },
 });

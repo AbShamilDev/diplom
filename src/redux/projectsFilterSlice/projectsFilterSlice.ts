@@ -2,24 +2,22 @@ import { SetStateAction } from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface projectsFilterState {
-  start_date?: Date;
-  end_date?: Date;
+  filter_period: (null | Date)[];
 }
 
-const state: projectsFilterState = {};
+const state: projectsFilterState = {
+  filter_period: [null, null],
+};
 
 const projectsFilterSlice = createSlice({
   name: "projectFilter",
   initialState: state,
   reducers: {
-    setStartDate: (state, action) => {
-      state.start_date = action.payload;
-    },
-    setEndDate: (state, action) => {
-      state.end_date = action.payload;
+    setFilterPeriod: (state, action) => {
+      state.filter_period = action.payload;
     },
   },
 });
 
 export default projectsFilterSlice.reducer;
-export const { setStartDate, setEndDate } = projectsFilterSlice.actions;
+export const { setFilterPeriod } = projectsFilterSlice.actions;

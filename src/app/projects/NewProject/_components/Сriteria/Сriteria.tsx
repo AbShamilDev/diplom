@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
-  const { installations, specifications, components } = useAppSelector(
+  const { installations, specifications, components, clients } = useAppSelector(
     (state) => state.dataSlice
   );
 
@@ -22,7 +22,7 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
   ) => {
     switch (ev.target.name) {
       case "client":
-        setProjectInfo({ ...projectInfo, client: ev.target.value });
+        setProjectInfo({ ...projectInfo, client_id: +ev.target.value });
         break;
 
       case "budget":
@@ -59,7 +59,7 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
           setProjectInfo({
             installation: installation,
             budget: projectInfo?.budget,
-            client: projectInfo?.client,
+            client_id: projectInfo?.client_id,
             fst_spec: getSpec(installation?.fst_specification_id),
             snd_spec: getSpec(installation?.snd_specification_id),
             trd_spec: getSpec(installation?.trd_specification_id),
@@ -72,14 +72,14 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
             snd_spec: { id: undefined, components: undefined, edited: false },
             trd_spec: { id: undefined, components: undefined, edited: false },
             budget: 0,
-            client: "",
+            client_id: 0,
             start_date: projectInfo.start_date,
           });
       default:
         break;
     }
   };
-
+  console.log(clients);
   return (
     <SC.ProjectDatasContainer>
       <SC.DataContainer>
@@ -103,13 +103,19 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
         <>
           <SC.DataContainer>
             <SC.HelperText>Заказчик:</SC.HelperText>
-            <SC.DataInput
-              type="text"
-              name="client"
-              value={projectInfo.client}
+            <NoMarginSelect
               onChange={onChangeHandler}
+              value={projectInfo.client_id || ""}
+              name="client"
               required
-            />
+            >
+              <option value="">Выберите заказчика</option>
+              {clients.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.name}
+                </option>
+              ))}
+            </NoMarginSelect>
           </SC.DataContainer>
 
           <SC.DataContainer>

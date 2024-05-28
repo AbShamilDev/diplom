@@ -148,14 +148,14 @@ const ComponentsTableEditor = () => {
           value={fields.name}
           style={{ gridArea: "name" }}
           required
-        ></SC.Input>
+        />
         <SC.Input
           name="link"
           placeholder="Ссылка (необязательно)"
           onChange={onChangeHandle}
           value={fields.link}
           style={{ gridArea: "link" }}
-        ></SC.Input>
+        />
         <SC.NoMarginSelect
           style={{ gridArea: "select" }}
           name="unit"
@@ -178,7 +178,7 @@ const ComponentsTableEditor = () => {
             onChange={onChangeHandle}
             value={fields.cost}
             required
-          ></SC.Input>
+          />
           <SC.CurrencySpan>₽</SC.CurrencySpan>
         </SC.CostBlock>
         <SC.ColumnBlock style={{ gridArea: "textarea" }}>
@@ -188,7 +188,7 @@ const ComponentsTableEditor = () => {
             onChange={onChangeHandle}
             value={fields.description}
             required
-          ></SC.Textarea>
+          />
           Альтернативы
         </SC.ColumnBlock>
         <AlternativesSelect

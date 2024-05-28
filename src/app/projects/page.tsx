@@ -12,8 +12,11 @@ import ProjectCard from "./ProjectCard/ProjectCard";
 const ProjectsPage = () => {
   const dispatch = useAppDispatch();
   const projects = useAppSelector((state) => state.dataSlice.projects);
-  const startDate = useAppSelector((state) => state.projectFilter.start_date);
-  const endDate = useAppSelector((state) => state.projectFilter.end_date);
+  const filterPeriod = useAppSelector(
+    (state) => state.projectFilter.filter_period
+  );
+  const [startDate, endDate] = filterPeriod;
+
   const fetchData = async () => {
     await axiosApp
       .get("/getall")
@@ -24,14 +27,19 @@ const ProjectsPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log();
+
   return (
     <>
       <Filters />
       <ProjectsContainer>
         {projects
           .filter((project) =>
-            startDate ? new Date(project.start_date) < startDate : true
+            startDate
+              ? new Date(project.start_date) >= new Date(startDate) &&
+                (endDate
+                  ? new Date(project.start_date) <= new Date(endDate)
+                  : true)
+              : true
           )
           .map((project) => (
             <ProjectCard key={`project_${project.id}`} project={project} />

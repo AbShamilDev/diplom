@@ -11,7 +11,8 @@ import { HelperText } from "../Сriteria/Сriteria.style";
 interface Props {
   spec_components: ComponentWithQuantity[] | undefined;
   name: string;
-  onSelectAlternative: (
+  isEditor?: boolean;
+  onSelectAlternative?: (
     ev: ChangeEvent<HTMLSelectElement>,
     oldId: number,
     newId: number
@@ -22,8 +23,9 @@ const ProjectTable: FC<Props> = ({
   spec_components,
   name,
   onSelectAlternative,
+  isEditor,
 }) => {
-  const { components } = useAppSelector((state) => state.dataSlice);
+  const { components, units } = useAppSelector((state) => state.dataSlice);
 
   return spec_components ? (
     <>
@@ -45,7 +47,9 @@ const ProjectTable: FC<Props> = ({
             <TableHead>Имя</TableHead>
             <TableHead>Количество</TableHead>
             <TableHead>Цена</TableHead>
-            <TableHead>Альтернативы</TableHead>
+            <TableHead>Стоимость</TableHead>
+            <TableHead>ЕИ</TableHead>
+            {isEditor && <TableHead>Альтернативы</TableHead>}
           </tr>
         </thead>
         <tbody>
@@ -54,33 +58,39 @@ const ProjectTable: FC<Props> = ({
               <SC.CustomTd>{el.name}</SC.CustomTd>
               <SC.CustomTd>{el.quantity}</SC.CustomTd>
               <SC.CustomTd>{convertToCost(el.cost)}</SC.CustomTd>
-              <SC.CustomTd style={{ width: "20%" }}>
-                {el.alternatives?.length ? (
-                  <NoMarginSelect
-                    style={{ width: "60%" }}
-                    value=""
-                    name={name}
-                    onChange={(ev) =>
-                      onSelectAlternative(ev, el.id, +ev.target.value)
-                    }
-                  >
-                    <option value="">Выберите альтернативу</option>
-                    {el.alternatives.map((altId) => {
-                      const { id, name, cost } = components.filter(
-                        (comp) => comp.id === +altId
-                      )[0];
-                      return (
-                        <option
-                          key={`alternative_${el.id}`}
-                          value={id}
-                        >{`${name} | ${convertToCost(cost)}`}</option>
-                      );
-                    })}
-                  </NoMarginSelect>
-                ) : (
-                  "Нет альтернатив"
-                )}
+              <SC.CustomTd>{convertToCost(el.cost * el.quantity)}</SC.CustomTd>
+              <SC.CustomTd>
+                {units.filter((unit) => unit.id === el.unit_id)[0].name}
               </SC.CustomTd>
+              {isEditor && onSelectAlternative && (
+                <SC.CustomTd style={{ width: "20%" }}>
+                  {el.alternatives?.length ? (
+                    <NoMarginSelect
+                      style={{ width: "60%" }}
+                      value=""
+                      name={name}
+                      onChange={(ev) =>
+                        onSelectAlternative(ev, el.id, +ev.target.value)
+                      }
+                    >
+                      <option value="">Выберите альтернативу</option>
+                      {el.alternatives.map((altId) => {
+                        const { id, name, cost } = components.filter(
+                          (comp) => comp.id === +altId
+                        )[0];
+                        return (
+                          <option
+                            key={`alternative_${el.id}`}
+                            value={id}
+                          >{`${name} | ${convertToCost(cost)}`}</option>
+                        );
+                      })}
+                    </NoMarginSelect>
+                  ) : (
+                    "Нет альтернатив"
+                  )}
+                </SC.CustomTd>
+              )}
             </tr>
           ))}
         </tbody>

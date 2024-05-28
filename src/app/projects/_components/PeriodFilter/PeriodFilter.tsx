@@ -1,22 +1,28 @@
-import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import * as SC from "./PeriodFilter.style";
 import { ru } from "date-fns/locale/ru";
-import { useState } from "react";
-import { useAppSelector } from "@/redux/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
+import { setFilterPeriod } from "@/redux/projectsFilterSlice/projectsFilterSlice";
 
 const PeriodFilter = () => {
   registerLocale("ru", ru);
-  const startDate = useAppSelector((state) => state.projectFilter.start_date);
-  const endDate = useAppSelector((state) => state.projectFilter.end_date);
+  const filterPeriod = useAppSelector(
+    (state) => state.projectFilter.filter_period
+  );
+  const [startDate, endDate] = filterPeriod;
+  const dispatch = useAppDispatch();
   return (
     <SC.DateInputContainer>
       <SC.DatePicker
         locale="ru"
-        selectsRange
+        selectsRange={true}
         startDate={startDate}
         endDate={endDate}
         dateFormat={"dd.MM.yyyy"}
-        onChange={(update) => {}}
+        onChange={(update) => {
+          console.log(update);
+          dispatch(setFilterPeriod(update));
+        }}
       />
     </SC.DateInputContainer>
   );

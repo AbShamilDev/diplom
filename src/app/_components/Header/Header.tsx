@@ -4,8 +4,9 @@ import * as SC from "./Header.style";
 import { usePathname } from "next/navigation";
 
 const buttons = [
-  { text: "база данных", route: "database" },
-  { text: "проекты", route: "projects" },
+  // { text: "заказчики", route: "clients" },
+  // { text: "проекты", route: "projects" },
+  { text: "БАЗА ДАННЫХ", route: "database" },
 ];
 
 const Header = () => {

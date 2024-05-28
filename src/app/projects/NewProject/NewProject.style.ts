@@ -16,6 +16,7 @@ export const TablesBlock = styled(MainBlock)<{ height: number | undefined }>`
   flex-direction: column;
   height: ${(props) => (props.height ? props.height : 0)}px;
   overflow: hidden;
+  ${(props) => !props.height && "margin-top: 0;"}
   transition: ease 1.4s;
 `;
 
