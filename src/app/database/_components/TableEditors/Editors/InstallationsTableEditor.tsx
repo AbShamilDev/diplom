@@ -8,7 +8,7 @@ import {
   setIsLoading,
 } from "@/redux/editDbSlice/editDbSlice";
 import { getInstallations } from "@/redux/dataSlice/dataSlice";
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 
 interface paramsInterface {
   id?: number;

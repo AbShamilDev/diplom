@@ -25,9 +25,7 @@ export const ItemsTable = styled.table`
   }
 `;
 
-export const TableHead = styled.th`
-  // border: 1px solid #000;
-`;
+export const TableHead = styled.th``;
 
 export const FnTd = styled.td`
   width: 44px;

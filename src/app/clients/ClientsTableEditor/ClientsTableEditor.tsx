@@ -1,10 +1,9 @@
 import TableEditorTemplate from "@/app/database/_components/TableEditors/TableEditors";
 import { Input } from "@/app/database/_components/TableEditors/TableEditors.style";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import ReactInputMask from "react-input-mask";
 import * as SC from "./ClientsTableEditor.style";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 import { getClients } from "@/redux/dataSlice/dataSlice";
 
 interface paramsInterface {
@@ -36,7 +35,7 @@ const ClientsTableEditor = () => {
     if (!editId) {
       await axiosApp
         .post("/clients", null, { params: { ...fields } })
-        .then((res) => {
+        .then(() => {
           dispatch(getClients());
           resetFields();
         })

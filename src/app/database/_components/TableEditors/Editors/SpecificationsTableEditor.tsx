@@ -4,7 +4,7 @@ import TableEditorTemplate from "../TableEditors";
 import ComponentsSelect from "../_components/ComponentsSelect/ComponentsSelect";
 import { dataState, getSpecifications } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 import { setEditId, setIsFill } from "@/redux/editDbSlice/editDbSlice";
 
 interface paramsInterface {

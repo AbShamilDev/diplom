@@ -6,10 +6,7 @@ import { CalculateInstallation, convertToCost } from "@/app/globalFcns";
 import { useAppSelector } from "@/redux/storeHooks";
 import ProjectTable from "../NewProject/_components/ProjectTable/ProjectTable";
 import { TablesBlock } from "../NewProject/NewProject.style";
-import {
-  SpanGrayButton,
-  TopContainer,
-} from "@/app/database/_components/DataTables/DataTable.style";
+import { SpanGrayButton } from "@/app/database/_components/DataTables/DataTable.style";
 import { Button } from "@/app/database/_components/Tabs/Tabs.style";
 
 interface Props {
@@ -99,7 +96,7 @@ const ProjectCard: FC<Props> = ({ project }) => {
             installation.trd_specification_id
           )}
         />
-        <Button style={{ backgroundColor: "#04713a" }}>
+        <Button style={{ backgroundColor: "#04713a", width: "fit-content" }}>
           Сохранить в Excel
         </Button>
       </TablesBlock>

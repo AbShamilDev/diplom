@@ -1,4 +1,4 @@
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface dataState {

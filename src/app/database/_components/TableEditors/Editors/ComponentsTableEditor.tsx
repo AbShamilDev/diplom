@@ -8,7 +8,7 @@ import {
   setIsLoading,
 } from "@/redux/editDbSlice/editDbSlice";
 import { getComponents } from "@/redux/dataSlice/dataSlice";
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 import AlternativesSelect from "../_components/AlternativesSelect/AlternativesSelect";
 
 interface paramsInterface {

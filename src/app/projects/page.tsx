@@ -1,6 +1,5 @@
 "use client";
 
-import { axiosApp } from "@/axiosApp";
 import NewProject from "./NewProject/NewProject";
 import Filters from "./_components/Filters/Filters";
 import { ProjectsContainer } from "./page.style";
@@ -8,6 +7,7 @@ import { setData } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { useEffect } from "react";
 import ProjectCard from "./ProjectCard/ProjectCard";
+import { fetchData } from "@/axios/axiosFcns";
 
 const ProjectsPage = () => {
   const dispatch = useAppDispatch();
@@ -17,15 +17,10 @@ const ProjectsPage = () => {
   );
   const [startDate, endDate] = filterPeriod;
 
-  const fetchData = async () => {
-    await axiosApp
-      .get("/getall")
+  useEffect(() => {
+    fetchData()
       .then((res) => dispatch(setData(res.data)))
       .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchData();
   }, []);
 
   return (

@@ -12,8 +12,10 @@ export const MainBlock = styled(ProjectHeader)`
 `;
 
 export const TablesBlock = styled(MainBlock)<{ height: number | undefined }>`
-  width: 50%;
+  flex: 1;
+  padding-right: 30px;
   flex-direction: column;
+  align-items: center;
   height: ${(props) => (props.height ? props.height : 0)}px;
   overflow: hidden;
   ${(props) => !props.height && "margin-top: 0;"}

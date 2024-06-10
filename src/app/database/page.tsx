@@ -3,21 +3,15 @@
 import Tabs, { TabsProps } from "./_components/Tabs/Tabs";
 import * as SC from "./page.style";
 import { useEffect } from "react";
-import { axiosApp } from "@/axiosApp";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { setData } from "@/redux/dataSlice/dataSlice";
 import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
+import { fetchData } from "@/axios/axiosFcns";
 
 const DataBasePage = () => {
   const tabs: TabsProps["tab"][] = ["Установки", "Спецификации"];
   const { editId, isFill, tab } = useAppSelector((state) => state.editSlice);
   const dispatch = useAppDispatch();
-  const fetchData = async () => {
-    await axiosApp
-      .get("/getall")
-      .then((res) => dispatch(setData(res.data)))
-      .catch((err) => console.error(err));
-  };
 
   const onClickTab = (tabName: TabsProps["tab"]) => {
     if (editId !== null || isFill)
@@ -31,7 +25,9 @@ const DataBasePage = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData()
+      .then((res) => dispatch(setData(res.data)))
+      .catch((err) => console.error(err));
   }, []);
 
   return (

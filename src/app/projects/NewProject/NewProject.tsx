@@ -13,7 +13,7 @@ import { convertToCost } from "@/app/globalFcns";
 import ProjectTable from "./_components/ProjectTable/ProjectTable";
 import { Button } from "@/app/database/_components/Tabs/Tabs.style";
 import Criteria from "./_components/Сriteria/Сriteria";
-import { axiosApp } from "@/axiosApp";
+import { axiosApp } from "@/axios/axiosApp";
 import Image from "next/image";
 
 export interface ComponentWithQuantity

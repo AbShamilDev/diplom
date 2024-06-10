@@ -6,11 +6,9 @@ import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
 import DepartmentSwitch from "../../_components/DepartmentSwitch/DepartmentSwitch";
 
 interface Props {
-  items: dataState[
-    | "components"
-    | "installations"
-    | "specifications"
-    | "clients"];
+  items:
+    | dataState["components" | "installations" | "specifications" | "clients"]
+    | undefined;
   showComponents?: boolean;
 }
 
@@ -30,7 +28,7 @@ const TabHeader: FC<Props> = ({ items, showComponents }) => {
   };
   return (
     <TopContainer>
-      <Title>Количество записей: {items.length}</Title>
+      <Title>Количество записей: {items?.length}</Title>
       {tab !== "Установки" && <DepartmentSwitch />}
       {showComponents && (
         <SpanGrayButton onClick={onClickLink}>Компоненты</SpanGrayButton>

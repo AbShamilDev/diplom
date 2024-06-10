@@ -29,19 +29,20 @@ const ClientsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
-              <tr
-                key={`${client.id}_${client.name}`}
-                style={{
-                  zIndex: editId === client.id ? 100 : 0,
-                }}
-              >
-                <td>{client.name}</td>
-                <td>{client.phone_number}</td>
-                <td>{client.email}</td>
-                <TdButton onClickEdit={() => onClickEdit(client.id)} />
-              </tr>
-            ))}
+            {clients &&
+              clients.map((client) => (
+                <tr
+                  key={`${client.id}_${client.name}`}
+                  style={{
+                    zIndex: editId === client.id ? 100 : 0,
+                  }}
+                >
+                  <td>{client.name}</td>
+                  <td>{client.phone_number}</td>
+                  <td>{client.email}</td>
+                  <TdButton onClickEdit={() => onClickEdit(client.id)} />
+                </tr>
+              ))}
           </tbody>
         </ItemsTable>
       </DataTableTemplate>
