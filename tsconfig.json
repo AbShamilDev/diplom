@@ -13,8 +13,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["node", "@tauri-apps/api"],
-    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./node_modules/@tauri-apps/api"],
     "plugins": [
       {
         "name": "next"
@@ -24,12 +24,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "./node_modules/@tauri-apps/api/**/*.d.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "src-tauri"]
 }

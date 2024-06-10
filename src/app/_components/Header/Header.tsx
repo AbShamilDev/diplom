@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const buttons = [
   { text: "заказчики", route: "clients" },
   { text: "проекты", route: "projects" },
-  // { text: "БАЗА ДАННЫХ", route: "database" },
+  { text: "БАЗА ДАННЫХ", route: "database" },
 ];
 
 const Header = () => {
