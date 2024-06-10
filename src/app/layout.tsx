@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./_components/Header/Header";
 import StoreProvider from "./StoreProvider";
-// import { appWindow } from "@tauri-apps/api/window";
 
 export const metadata: Metadata = {
   title: "diplom",
@@ -14,12 +13,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // appWindow.setSize({
-  //   type: "",
-  //   width: 1920,
-  //   height: 1080,
-  // });
-  // appWindow.setFullscreen(true);
   return (
     <html lang="ru">
       <body id="appElement" style={{ background: "#fff", color: "black" }}>
