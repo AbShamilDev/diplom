@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { setData } from "@/redux/dataSlice/dataSlice";
 import { setEditId, setIsFill, setTab } from "@/redux/editDbSlice/editDbSlice";
-import { fetchData } from "@/axios/axiosFcns";
+import { fetchData } from "@/axios/axiosQueries";
 
 const DataBasePage = () => {
   const tabs: TabsProps["tab"][] = ["Установки", "Спецификации"];

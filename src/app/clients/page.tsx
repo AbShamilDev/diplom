@@ -6,7 +6,7 @@ import ClientsTableEditor from "./ClientsTableEditor/ClientsTableEditor";
 import ClientsTable from "./ClientsTable/ClientsTable";
 import { useEffect } from "react";
 import { setData } from "@/redux/dataSlice/dataSlice";
-import { fetchData } from "@/axios/axiosFcns";
+import { fetchData } from "@/axios/axiosQueries";
 
 const ClientsPage = () => {
   const dispatch = useAppDispatch();

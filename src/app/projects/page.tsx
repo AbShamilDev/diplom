@@ -7,7 +7,7 @@ import { setData } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
 import { useEffect } from "react";
 import ProjectCard from "./ProjectCard/ProjectCard";
-import { fetchData } from "@/axios/axiosFcns";
+import { fetchData } from "@/axios/axiosQueries";
 
 const ProjectsPage = () => {
   const dispatch = useAppDispatch();
