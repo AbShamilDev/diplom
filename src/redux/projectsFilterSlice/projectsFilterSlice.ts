@@ -1,12 +1,16 @@
-import { SetStateAction } from "react";
 import { createSlice } from "@reduxjs/toolkit";
+import { dataState } from "../dataSlice/dataSlice";
 
 interface projectsFilterState {
-  filter_period: (null | Date)[];
+  period: (null | Date)[];
+  client: null | dataState["clients"][0];
+  installation: null | dataState["installations"][0];
 }
 
 const state: projectsFilterState = {
-  filter_period: [null, null],
+  period: [null, null],
+  client: null,
+  installation: null,
 };
 
 const projectsFilterSlice = createSlice({
@@ -14,10 +18,17 @@ const projectsFilterSlice = createSlice({
   initialState: state,
   reducers: {
     setFilterPeriod: (state, action) => {
-      state.filter_period = action.payload;
+      state.period = action.payload;
+    },
+    setFilterClient: (state, action) => {
+      state.client = action.payload;
+    },
+    setFilterInstallation: (state, action) => {
+      state.installation = action.payload;
     },
   },
 });
 
 export default projectsFilterSlice.reducer;
-export const { setFilterPeriod } = projectsFilterSlice.actions;
+export const { setFilterPeriod, setFilterClient, setFilterInstallation } =
+  projectsFilterSlice.actions;
