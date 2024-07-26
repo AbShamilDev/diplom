@@ -17,9 +17,7 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
     (state) => state.dataSlice
   );
 
-  const onChangeHandler = (
-    ev: ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => {
+  const onChangeHandler = (ev: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     switch (ev.target.name) {
       case "client":
         setProjectInfo({ ...projectInfo, client_id: +ev.target.value });
@@ -37,13 +35,9 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
 
       case "installation":
         if (ev.target.value !== "") {
-          const installation = installations.find(
-            (el) => el.id === +ev.target.value
-          );
+          const installation = installations.find((el) => el.id === +ev.target.value);
           const getSpec = (spec_id: number | undefined) => {
-            const specification = specifications.find(
-              (el) => el.id === spec_id
-            );
+            const specification = specifications.find((el) => el.id === spec_id);
             return {
               id: spec_id,
               name: specification?.name,
@@ -79,7 +73,7 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
         break;
     }
   };
-  console.log(clients);
+
   return (
     <SC.ProjectDatasContainer>
       <SC.DataContainer>
@@ -140,11 +134,7 @@ const Criteria: FC<Props> = ({ setProjectInfo, projectInfo }) => {
               onChange={(date) => {
                 setProjectInfo({
                   ...projectInfo,
-                  start_date: date
-                    ? !isArray(date)
-                      ? date
-                      : date[0]
-                    : projectInfo.start_date,
+                  start_date: date ? (!isArray(date) ? date : date[0]) : projectInfo.start_date,
                 });
               }}
             />

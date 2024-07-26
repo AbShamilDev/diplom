@@ -12,9 +12,7 @@ const ClientsPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchData()
-      .then((res) => dispatch(setData(res.data)))
-      .catch((err) => console.error(err));
+    fetchData((res) => dispatch(setData(res.data)))
   }, []);
 
   return (

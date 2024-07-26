@@ -2,37 +2,31 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "../TableEditors.style";
 import TableEditorTemplate from "../TableEditors";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import {
-  setEditId,
-  setIsFill,
-  setIsLoading,
-} from "@/redux/editDbSlice/editDbSlice";
-import { getComponents } from "@/redux/dataSlice/dataSlice";
-import { axiosApp } from "@/axios/axiosApp";
+import { setEditId, setIsFill, setIsLoading } from "@/redux/editDbSlice/editDbSlice";
+import { getComponents, setComponents } from "@/redux/dataSlice/dataSlice";
 import AlternativesSelect from "../_components/AlternativesSelect/AlternativesSelect";
+import { patchComponent, postComponent } from "@/axios/axiosQueries";
 
 interface paramsInterface {
   id?: number;
   name: string;
   description: string;
-  unit_id: number | string;
+  unit_id: number;
   alternatives: number[];
   link: string;
-  cost: number | string;
+  cost: number;
 }
 
 const ComponentsTableEditor = () => {
   const { units, components } = useAppSelector((state) => state.dataSlice);
-  const { isFill, editId, departmentFilter } = useAppSelector(
-    (state) => state.editSlice
-  );
+  const { isFill, editId, departmentFilter } = useAppSelector((state) => state.editSlice);
   const [fields, setFields] = useState<paramsInterface>({
     name: "",
     description: "",
-    unit_id: "",
+    unit_id: 0,
     alternatives: [],
     link: "",
-    cost: "",
+    cost: 0,
   });
   const dispatch = useAppDispatch();
 
@@ -44,12 +38,12 @@ const ComponentsTableEditor = () => {
         setFields({ ...fields, name: ev.target.value });
         break;
       case "unit":
-        setFields({ ...fields, unit_id: ev.target.value });
+        setFields({ ...fields, unit_id: +ev.target.value });
         break;
       case "cost":
         setFields({
           ...fields,
-          cost: ev.target.value,
+          cost: +ev.target.value,
         });
         break;
       case "link":
@@ -74,32 +68,23 @@ const ComponentsTableEditor = () => {
     ev.preventDefault();
     dispatch(setIsLoading(true));
     if (editId) {
-      await axiosApp
-        .patch("/components", null, {
-          params: { ...fields, id: editId, department_id: departmentFilter },
-        })
-        .then(() => {
-          dispatch(setEditId(null));
-          dispatch(getComponents());
-        })
-        .catch((err) => console.error(err));
+      patchComponent({ ...fields, id: editId, department_id: departmentFilter }, () => {
+        dispatch(setEditId(null));
+        dispatch(getComponents());
+      });
     } else
-      await axiosApp
-        .post("/components", null, {
-          params: { ...fields, department_id: departmentFilter },
-        })
-        .then(() => {
-          setFields({
-            name: "",
-            description: "",
-            unit_id: "",
-            alternatives: [],
-            link: "",
-            cost: "",
-          });
-          dispatch(getComponents());
-        })
-        .catch((err) => console.error(err));
+      postComponent({ ...fields, department_id: departmentFilter }, () => {
+        setFields({
+          name: "",
+          description: "",
+          unit_id: 0,
+          alternatives: [],
+          link: "",
+          cost: 0,
+        });
+      });
+    dispatch(setComponents([...components, fields]));
+
     dispatch(setIsLoading(false));
   };
 
@@ -124,15 +109,15 @@ const ComponentsTableEditor = () => {
         unit_id: component.unit_id,
         alternatives: component.alternatives,
         link: component.link,
-        cost: `${component.cost}`,
+        cost: component.cost,
       });
     } else {
       setFields({
         name: "",
         description: "",
-        unit_id: "",
+        unit_id: 0,
         alternatives: [],
-        cost: "",
+        cost: 0,
         link: "",
       });
     }

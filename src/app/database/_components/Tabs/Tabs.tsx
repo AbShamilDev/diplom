@@ -14,25 +14,25 @@ export interface TabsProps {
 
 const Tabs: FC<TabsProps> = ({ tab }) => {
   const dataSlice = useAppSelector((state) => state.dataSlice);
-  const [choosedTemplate, setChoosedTemplate] = useState<JSX.Element>();
+  const [choosedEditor, setChoosedEditor] = useState<JSX.Element>();
   const [choosedTable, setChoosedTable] = useState<JSX.Element>();
 
   useEffect(() => {
     switch (tab) {
       case "Установки":
-        setChoosedTemplate(<InstallationsTableEditor />);
+        setChoosedEditor(<InstallationsTableEditor />);
         setChoosedTable(
           <InstallationsDataTable items={dataSlice.installations} />
         );
         break;
       case "Спецификации":
-        setChoosedTemplate(<SpecificationsTableEditor />);
+        setChoosedEditor(<SpecificationsTableEditor />);
         setChoosedTable(
           <SpecificationsDataTable items={dataSlice.specifications} />
         );
         break;
       case "Компоненты":
-        setChoosedTemplate(<ComponentsTableEditor />);
+        setChoosedEditor(<ComponentsTableEditor />);
         setChoosedTable(<ComponentsDataTable items={dataSlice.components} />);
         break;
       default:
@@ -43,7 +43,7 @@ const Tabs: FC<TabsProps> = ({ tab }) => {
   return (
     <SC.ItemsContainer>
       {choosedTable}
-      {choosedTemplate}
+      {choosedEditor}
     </SC.ItemsContainer>
   );
 };

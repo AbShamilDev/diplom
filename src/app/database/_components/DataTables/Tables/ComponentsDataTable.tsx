@@ -13,19 +13,17 @@ interface ItemsProps {
 }
 
 const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
-  const { editId, departmentFilter } = useAppSelector(
-    (state) => state.editSlice
-  );
   const { units } = useAppSelector((state) => state.dataSlice);
+  const { editId, departmentFilter } = useAppSelector((state) => state.editSlice);
   const dispatch = useAppDispatch();
 
   const onClickEdit = (id: number) => {
     editId ? dispatch(setEditId(null)) : dispatch(setEditId(id));
   };
-  console.log(departmentFilter);
+
   return (
     <>
-      <TabHeader items={items} />
+      <TabHeader items={items.filter((item) => item.department_id === departmentFilter)} />
       <DataTableTemplate>
         <SC.ItemsTable>
           <thead>
@@ -50,11 +48,7 @@ const ComponentsDataTable: FC<ItemsProps> = ({ items }) => {
                   <td>{item.description}</td>
                   <td>{convertToCost(item.cost)}</td>
                   <td>{units[item.unit_id - 1].name}</td>
-                  <TdButton
-                    onClickEdit={() => onClickEdit(item.id)}
-                    linkEnable
-                    link={item.link}
-                  />
+                  <TdButton onClickEdit={() => onClickEdit(item.id)} linkEnable link={item.link} />
                 </tr>
               ))}
           </tbody>

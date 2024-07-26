@@ -4,8 +4,8 @@ import TableEditorTemplate from "../TableEditors";
 import ComponentsSelect from "../_components/ComponentsSelect/ComponentsSelect";
 import { dataState, getSpecifications } from "@/redux/dataSlice/dataSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import { axiosApp } from "@/axios/axiosApp";
 import { setEditId, setIsFill } from "@/redux/editDbSlice/editDbSlice";
+import { patchSpecification, postSpecification } from "@/axios/axiosQueries";
 
 interface paramsInterface {
   id?: number;
@@ -24,9 +24,7 @@ const SpecificationsTableEditor = () => {
   const { isFill, editId, departmentFilter } = useAppSelector(
     (state) => state.editSlice
   );
-  const { departments, specifications } = useAppSelector(
-    (state) => state.dataSlice
-  );
+  const { specifications } = useAppSelector((state) => state.dataSlice);
 
   const onChangeHandle = (
     ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,32 +42,25 @@ const SpecificationsTableEditor = () => {
     ev.preventDefault();
 
     if (editId) {
-      await axiosApp
-        .patch("/specifications", null, {
-          params: { ...fields, department_id: departmentFilter, id: editId },
-        })
-        .then(() => {
+      patchSpecification(
+        { ...fields, department_id: departmentFilter, id: editId },
+        () => {
           setFields({
             name: "",
             components: [],
           });
           dispatch(setEditId(null));
           dispatch(getSpecifications());
-        })
-        .catch((err) => console.error(err));
+        }
+      );
     } else
-      await axiosApp
-        .post("/specifications", null, {
-          params: { ...fields, department_id: departmentFilter },
-        })
-        .then(() => {
-          setFields({
-            name: "",
-            components: [],
-          });
-          dispatch(getSpecifications());
-        })
-        .catch((err) => console.error(err));
+      postSpecification({ ...fields, department_id: departmentFilter }, () => {
+        setFields({
+          name: "",
+          components: [],
+        });
+        dispatch(getSpecifications());
+      });
   };
 
   useEffect(() => {

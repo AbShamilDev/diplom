@@ -6,9 +6,7 @@ import { setFilterPeriod } from "@/redux/projectsFilterSlice/projectsFilterSlice
 
 const PeriodFilter = () => {
   registerLocale("ru", ru);
-  const filterPeriod = useAppSelector(
-    (state) => state.projectFilter.filter_period
-  );
+  const filterPeriod = useAppSelector((state) => state.projectFilter.period);
   const [startDate, endDate] = filterPeriod;
   const dispatch = useAppDispatch();
   return (
@@ -20,7 +18,6 @@ const PeriodFilter = () => {
         endDate={endDate}
         dateFormat={"dd.MM.yyyy"}
         onChange={(update) => {
-          console.log(update);
           dispatch(setFilterPeriod(update));
         }}
       />

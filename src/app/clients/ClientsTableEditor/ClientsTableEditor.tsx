@@ -3,8 +3,9 @@ import { Input } from "@/app/database/_components/TableEditors/TableEditors.styl
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "./ClientsTableEditor.style";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import { axiosApp } from "@/axios/axiosApp";
-import { getClients } from "@/redux/dataSlice/dataSlice";
+import { getClients, getInstallations } from "@/redux/dataSlice/dataSlice";
+import { patchClient, postClient } from "@/axios/axiosQueries";
+import { setEditId } from "@/redux/editDbSlice/editDbSlice";
 
 interface paramsInterface {
   id?: number;
@@ -30,18 +31,18 @@ const ClientsTableEditor = () => {
       email: "",
     });
 
-  const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    if (!editId) {
-      await axiosApp
-        .post("/clients", null, { params: { ...fields } })
-        .then(() => {
-          dispatch(getClients());
-          resetFields();
-        })
-        .catch((err) => console.error(err));
-    } else {
-    }
+    if (!editId)
+      postClient(fields, () => {
+        dispatch(getClients());
+        resetFields();
+      });
+    else
+      patchClient({ ...fields, id: editId }, () => {
+        dispatch(setEditId(null));
+        dispatch(getInstallations());
+      });
   };
 
   const onChangeHandle = (ev: ChangeEvent<HTMLInputElement>) => {

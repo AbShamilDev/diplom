@@ -8,7 +8,7 @@ import {
   setIsLoading,
 } from "@/redux/editDbSlice/editDbSlice";
 import { getInstallations } from "@/redux/dataSlice/dataSlice";
-import { axiosApp } from "@/axios/axiosApp";
+import { patchInstallation, postInstallation } from "@/axios/axiosQueries";
 
 interface paramsInterface {
   id?: number;
@@ -73,31 +73,25 @@ const InstallationsTableEditor = () => {
     }
   };
 
-  const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    if (editId) {
-      await axiosApp
-        .patch("/installations", null, { params: { ...fields, id: editId } })
-        .then(() => {
-          dispatch(setEditId(null));
-          dispatch(getInstallations());
-        })
-        .catch((err) => console.error(err));
-    } else
-      await axiosApp
-        .post("/installations", null, { params: fields })
-        .then(() => {
-          setFields({
-            name: "",
-            fst_specification_id: 0,
-            snd_specification_id: 0,
-            trd_specification_id: 0,
-            two_lines: false,
-          });
-          dispatch(getInstallations());
-        })
-        .catch((err) => console.error(err));
+    if (editId)
+      patchInstallation({ ...fields, id: editId }, () => {
+        dispatch(setEditId(null));
+        dispatch(getInstallations());
+      });
+    else
+      postInstallation(fields, () => {
+        setFields({
+          name: "",
+          fst_specification_id: 0,
+          snd_specification_id: 0,
+          trd_specification_id: 0,
+          two_lines: false,
+        });
+        dispatch(getInstallations());
+      });
     dispatch(setIsLoading(false));
   };
 

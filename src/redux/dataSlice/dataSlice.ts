@@ -44,32 +44,164 @@ export interface dataState {
 }
 
 const initialState: dataState = {
-  projects: [],
-  installations: [],
-  specifications: [],
-  components: [],
-  departments: [],
-  units: [],
-  clients: [],
+  projects: [
+    {
+      id: 0,
+      client_id: 1,
+      installation_id: 1,
+      budget: 10000,
+      start_date: "",
+    },
+    {
+      id: 1,
+      client_id: 1,
+      installation_id: 1,
+      budget: 10000,
+      start_date: "",
+    },
+    {
+      id: 2,
+      client_id: 1,
+      installation_id: 1,
+      budget: 10000,
+      start_date: "",
+    },
+  ],
+  installations: [
+    {
+      id: 1,
+      name: "Test installation",
+      fst_specification_id: 1,
+      snd_specification_id: 2,
+      trd_specification_id: 3,
+      two_lines: false,
+    },
+  ],
+  specifications: [
+    {
+      id: 1,
+      name: "Test spec1",
+      components: [{ id: 1, quantity: 10 }],
+      department_id: 1,
+    },
+    {
+      id: 2,
+      name: "Test spec2",
+      components: [{ id: 2, quantity: 10 }],
+      department_id: 2,
+    },
+    {
+      id: 3,
+      name: "Test spec3",
+      components: [{ id: 3, quantity: 10 }],
+      department_id: 3,
+    },
+  ],
+  components: [
+    {
+      id: 1,
+      name: "Test comp1",
+      description: "1",
+      cost: 100,
+      alternatives: [2],
+      department_id: 1,
+      unit_id: 1,
+      link: "",
+    },
+    {
+      id: 2,
+      name: "Test comp2",
+      description: "2",
+      cost: 200,
+      alternatives: [1],
+      department_id: 1,
+      unit_id: 1,
+      link: "",
+    },
+    {
+      id: 3,
+      name: "Test comp3",
+      description: "3",
+      cost: 100,
+      alternatives: [4],
+      department_id: 2,
+      unit_id: 1,
+      link: "",
+    },
+    {
+      id: 4,
+      name: "Test comp4",
+      description: "4",
+      cost: 200,
+      alternatives: [3],
+      department_id: 2,
+      unit_id: 1,
+      link: "",
+    },
+    {
+      id: 5,
+      name: "Test comp5",
+      description: "5",
+      cost: 100,
+      alternatives: [6],
+      department_id: 3,
+      unit_id: 1,
+      link: "",
+    },
+    {
+      id: 6,
+      name: "Test comp6",
+      description: "6",
+      cost: 200,
+      alternatives: [5],
+      department_id: 3,
+      unit_id: 1,
+      link: "",
+    },
+  ],
+  departments: [
+    {
+      id: 1,
+      name: "АСУТП",
+    },
+    {
+      id: 2,
+      name: "Гидравлика",
+    },
+    {
+      id: 3,
+      name: "Блоки питания",
+    },
+  ],
+  units: [
+    {
+      id: 1,
+      name: "шт",
+    },
+    {
+      id: 2,
+      name: "л",
+    },
+  ],
+  clients: [
+    {
+      id: 1,
+      name: "Test client",
+    },
+  ],
 };
 
 export const getComponents = createAsyncThunk("getComponents", async () => {
   return await axiosApp.get("/components").then((res) => res.data);
 });
 
-export const getSpecifications = createAsyncThunk(
-  "getSpecifications",
-  async () => {
-    return await axiosApp.get("/specifications").then((res) => res.data);
-  }
-);
+export const getSpecifications = createAsyncThunk("getSpecifications", async () => {
+  return await axiosApp.get("/specifications").then((res) => res.data);
+});
 
-export const getInstallations = createAsyncThunk(
-  "getInstallations",
-  async () => {
-    return await axiosApp.get("/installations").then((res) => res.data);
-  }
-);
+export const getInstallations = createAsyncThunk("getInstallations", async () => {
+  return await axiosApp.get("/installations").then((res) => res.data);
+});
 
 export const getProjects = createAsyncThunk("getProjects", async () => {
   return await axiosApp.get("/projects").then((res) => res.data);

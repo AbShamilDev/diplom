@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.principapp",
+      "identifier": "com.principapp_manager",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

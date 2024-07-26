@@ -13,8 +13,8 @@ import { convertToCost } from "@/app/globalFcns";
 import ProjectTable from "./_components/ProjectTable/ProjectTable";
 import { Button } from "@/app/database/_components/Tabs/Tabs.style";
 import Criteria from "./_components/Сriteria/Сriteria";
-import { axiosApp } from "@/axios/axiosApp";
 import Image from "next/image";
+import { postProject } from "@/axios/axiosQueries";
 
 export interface ComponentWithQuantity
   extends Pick<dataState["components"][0], keyof dataState["components"][0]> {
@@ -168,15 +168,12 @@ const NewProject = () => {
 
   const onSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    await axiosApp
-      .post("/projects", null, { params: projectInfo })
-      .then(() => {
-        dispatch(getSpecifications());
-        dispatch(getInstallations());
-        dispatch(getProjects());
-        resetProjectInfo();
-      })
-      .catch((err) => console.error(err));
+    postProject({ ...projectInfo }, () => {
+      dispatch(getSpecifications());
+      dispatch(getInstallations());
+      dispatch(getProjects());
+      resetProjectInfo();
+    });
   };
 
   useEffect(() => {

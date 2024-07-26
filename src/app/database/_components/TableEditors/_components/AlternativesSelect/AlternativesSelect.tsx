@@ -16,15 +16,9 @@ interface Props {
   alternatives: number[];
 }
 
-const AlternativesSelect: FC<Props> = ({
-  onChange,
-  onDelete,
-  alternatives,
-}) => {
+const AlternativesSelect: FC<Props> = ({ onChange, onDelete, alternatives }) => {
   const components = useAppSelector((state) => state.dataSlice.components);
-  const { editId, departmentFilter } = useAppSelector(
-    (state) => state.editSlice
-  );
+  const { editId, departmentFilter } = useAppSelector((state) => state.editSlice);
 
   return (
     <AltenativesBlock>
@@ -46,7 +40,7 @@ const AlternativesSelect: FC<Props> = ({
       <AvaliableComponentsContainer style={{ width: "100%" }}>
         {alternatives.map((altId) => {
           const component = components.filter((comp) => +comp.id === +altId)[0];
-          console.log(alternatives, components);
+
           return (
             <ComponentChip
               key={`alternative_chip_${altId}`}
@@ -56,12 +50,7 @@ const AlternativesSelect: FC<Props> = ({
               <ComponentName>{component.name}</ComponentName>
               <ComponentCost>
                 {convertToCost(component.cost)}
-                <Image
-                  src="/images/delete_white.svg"
-                  width={20}
-                  height={20}
-                  alt="delete"
-                />
+                <Image src="/images/delete_white.svg" width={20} height={20} alt="delete" />
               </ComponentCost>
             </ComponentChip>
           );

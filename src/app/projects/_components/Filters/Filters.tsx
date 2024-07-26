@@ -1,9 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@/redux/storeHooks";
-import DropdownInput from "../DropdownInput/DropdownInput";
 import PeriodFilter from "../PeriodFilter/PeriodFilter";
-import Search from "../Search/Search";
 import * as SC from "./Filters.style";
 
 const Filters = () => {
