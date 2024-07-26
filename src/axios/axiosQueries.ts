@@ -1,11 +1,9 @@
-import { AxiosResponse } from "axios";
+import { type AxiosResponse } from "axios";
 import { dataState } from "..";
 import { axiosApp } from "./axiosApp";
 import { projectInfo } from "@/app/projects/NewProject/NewProject";
 
-export const fetchData = async (
-  thenFcn: (res: AxiosResponse<any, any>) => void
-) => {
+export const fetchData = async (thenFcn: (res: AxiosResponse<any, any>) => void) => {
   return await axiosApp
     .get("/getall")
     .then(thenFcn)
@@ -56,10 +54,7 @@ export const postClient = async (
     .catch((error) => console.log(error));
 };
 
-export const postProject = async (
-  project: projectInfo,
-  thenFcn: () => void
-) => {
+export const postProject = async (project: projectInfo, thenFcn: () => void) => {
   return await axiosApp
     .post("/projects", null, { params: { ...project } })
     .then(thenFcn)
@@ -100,10 +95,7 @@ export const patchComponent = async (
     .catch((error) => console.log(error));
 };
 
-export const patchClient = async (
-  client: dataState["clients"][0],
-  thenFcn: () => void
-) => {
+export const patchClient = async (client: dataState["clients"][0], thenFcn: () => void) => {
   await axiosApp
     .patch("/clients", null, { params: { ...client } })
     .then(thenFcn)

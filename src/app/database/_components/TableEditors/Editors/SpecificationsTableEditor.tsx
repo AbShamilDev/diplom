@@ -21,14 +21,10 @@ const SpecificationsTableEditor = () => {
   });
 
   const dispatch = useAppDispatch();
-  const { isFill, editId, departmentFilter } = useAppSelector(
-    (state) => state.editSlice
-  );
+  const { isFill, editId, departmentFilter } = useAppSelector((state) => state.editSlice);
   const { specifications } = useAppSelector((state) => state.dataSlice);
 
-  const onChangeHandle = (
-    ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const onChangeHandle = (ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     switch (ev.target.name) {
       case "name":
         setFields({ ...fields, name: ev.target.value });
@@ -42,17 +38,14 @@ const SpecificationsTableEditor = () => {
     ev.preventDefault();
 
     if (editId) {
-      patchSpecification(
-        { ...fields, department_id: departmentFilter, id: editId },
-        () => {
-          setFields({
-            name: "",
-            components: [],
-          });
-          dispatch(setEditId(null));
-          dispatch(getSpecifications());
-        }
-      );
+      patchSpecification({ ...fields, department_id: departmentFilter, id: editId }, () => {
+        setFields({
+          name: "",
+          components: [],
+        });
+        dispatch(setEditId(null));
+        dispatch(getSpecifications());
+      });
     } else
       postSpecification({ ...fields, department_id: departmentFilter }, () => {
         setFields({

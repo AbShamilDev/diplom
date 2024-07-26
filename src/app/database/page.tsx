@@ -31,12 +31,7 @@ const DataBasePage = () => {
   return (
     <SC.mainDiv>
       {tabs.map((el, i) => (
-        <SC.tabDiv
-          key={`tab_${i}`}
-          offset={i}
-          active={tab === el}
-          onClick={() => onClickTab(el)}
-        >
+        <SC.tabDiv key={`tab_${i}`} offset={i} active={tab === el} onClick={() => onClickTab(el)}>
           {el}
         </SC.tabDiv>
       ))}

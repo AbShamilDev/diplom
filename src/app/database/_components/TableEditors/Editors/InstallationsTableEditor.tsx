@@ -2,11 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as SC from "../TableEditors.style";
 import TableEditorTemplate from "../TableEditors";
 import { useAppDispatch, useAppSelector } from "@/redux/storeHooks";
-import {
-  setEditId,
-  setIsFill,
-  setIsLoading,
-} from "@/redux/editDbSlice/editDbSlice";
+import { setEditId, setIsFill, setIsLoading } from "@/redux/editDbSlice/editDbSlice";
 import { getInstallations } from "@/redux/dataSlice/dataSlice";
 import { patchInstallation, postInstallation } from "@/axios/axiosQueries";
 
@@ -29,14 +25,10 @@ const InstallationsTableEditor = () => {
   });
 
   const dispatch = useAppDispatch();
-  const { specifications, departments, installations } = useAppSelector(
-    (state) => state.dataSlice
-  );
+  const { specifications, departments, installations } = useAppSelector((state) => state.dataSlice);
   const { isFill, editId } = useAppSelector((state) => state.editSlice);
 
-  const onChangeHandle = (
-    ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const onChangeHandle = (ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     switch (ev.target.name) {
       case "name":
         setFields({ ...fields, name: ev.target.value });

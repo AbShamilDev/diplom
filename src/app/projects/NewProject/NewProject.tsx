@@ -74,9 +74,7 @@ const NewProject = () => {
     oldId: number,
     newId: number
   ) => {
-    const getSpec = (
-      spec: projectInfo["fst_spec" | "snd_spec" | "trd_spec"]
-    ) => {
+    const getSpec = (spec: projectInfo["fst_spec" | "snd_spec" | "trd_spec"]) => {
       const newComponent = components.filter((comp) => comp.id === newId)[0];
       return {
         ...spec,
@@ -112,9 +110,8 @@ const NewProject = () => {
   };
 
   const CalculateTotalProject = (projectInfo: projectInfo) => {
-    const CalculateTotalSpec = (
-      components: ComponentWithQuantity[] | undefined
-    ) => components?.reduce((acc, cur) => acc + cur.cost * cur.quantity, 0);
+    const CalculateTotalSpec = (components: ComponentWithQuantity[] | undefined) =>
+      components?.reduce((acc, cur) => acc + cur.cost * cur.quantity, 0);
 
     const fst_cost = CalculateTotalSpec(projectInfo.fst_spec.components);
     const snd_cost = CalculateTotalSpec(projectInfo.snd_spec.components);
@@ -123,27 +120,19 @@ const NewProject = () => {
     return (
       (fst_cost ? fst_cost : 0) +
       (snd_cost ? snd_cost : 0) +
-      (trd_cost
-        ? projectInfo?.installation?.two_lines
-          ? trd_cost * 2
-          : trd_cost
-        : 0)
+      (trd_cost ? (projectInfo?.installation?.two_lines ? trd_cost * 2 : trd_cost) : 0)
     );
   };
 
   const onClickMinimalHandle = () => {
-    const getMinimalSpec = (
-      spec: projectInfo["fst_spec" | "snd_spec" | "trd_spec"]
-    ) => {
+    const getMinimalSpec = (spec: projectInfo["fst_spec" | "snd_spec" | "trd_spec"]) => {
       let edited = spec.edited;
       const resultSpec = {
         ...spec,
         components: spec.components?.map((comp) => {
           let minComponent: ComponentWithQuantity = comp;
           comp.alternatives.forEach((altId) => {
-            const altComponent = components.filter(
-              (comp) => comp.id === +altId
-            )[0];
+            const altComponent = components.filter((comp) => comp.id === +altId)[0];
             if (altComponent.cost < +minComponent.cost) {
               if (!edited) edited = true;
               minComponent = {
@@ -184,9 +173,7 @@ const NewProject = () => {
     <ClassicWrapper>
       <SC.CloseButton
         style={
-          projectInfo.installation
-            ? { opacity: "100%" }
-            : { opacity: "0", pointerEvents: "none" }
+          projectInfo.installation ? { opacity: "100%" } : { opacity: "0", pointerEvents: "none" }
         }
         onClick={() => resetProjectInfo()}
       >
@@ -198,9 +185,7 @@ const NewProject = () => {
       <SC.MainBlock>
         <SC.TablesBlock
           ref={tablesRef}
-          height={
-            projectInfo.installation ? tablesRef.current?.scrollHeight : 0
-          }
+          height={projectInfo.installation ? tablesRef.current?.scrollHeight : 0}
         >
           <ProjectTable
             spec_components={projectInfo.fst_spec.components}
@@ -228,11 +213,7 @@ const NewProject = () => {
             <>
               <SC.FooterContainer>
                 {"Общая цена: "}
-                <SC.Cost
-                  isTooMuch={
-                    projectInfo.budget ? totalCost > projectInfo.budget : true
-                  }
-                >
+                <SC.Cost isTooMuch={projectInfo.budget ? totalCost > projectInfo.budget : true}>
                   {convertToCost(totalCost)}
                 </SC.Cost>
               </SC.FooterContainer>

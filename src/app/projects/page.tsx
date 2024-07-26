@@ -11,9 +11,7 @@ import { fetchData } from "@/axios/axiosQueries";
 
 const ProjectsPage = () => {
   const dispatch = useAppDispatch();
-  const { projects, clients, installations } = useAppSelector(
-    (state) => state.dataSlice
-  );
+  const { projects, clients, installations } = useAppSelector((state) => state.dataSlice);
   const filters = useAppSelector((state) => state.projectFilter);
   const [startDate, endDate] = filters.period;
   const [filteredProjects, setFilteredProjects] = useState(projects);
